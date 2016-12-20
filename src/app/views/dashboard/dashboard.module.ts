@@ -4,7 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 
 import { Dashboard } from './dashboard.component';
+import { LiveSales } from './liveSales/liveSales.component';
 import { routing }       from './dashboard.routing';
+
+import { LiveSalesService } from './liveSales/liveSales.service';
 
 
 @NgModule({
@@ -15,10 +18,11 @@ import { routing }       from './dashboard.routing';
     routing
   ],
   declarations: [
-    Dashboard
+    Dashboard,
+    LiveSales
   ],
   providers: [
-
+    LiveSalesService
   ]
 })
 export default class DashboardModule {}
