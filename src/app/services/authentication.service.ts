@@ -35,6 +35,24 @@ export class AuthenticationService {
         }).map(this.extractJwt).catch(this.handleError)
     }
 
+    apiGet(apistring:string){
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this._http.get(this._const.root_url + 'api/' + apistring, { headers: headers })
+            .map(this.extractData)
+            .catch(err => {
+                if (err.status  == 401){
+                    this.logout();
+                    return Observable.arguments;
+                }else{
+                    this.handleError(err);
+                }
+            });
+    }
+
     getUser() {
         let authToken = localStorage.getItem('auth_token');
 
@@ -72,8 +90,8 @@ export class AuthenticationService {
 
     private extractData(res: Response) {
         let body = res.json();
-        return body.Email || {};
     }
+
 
     logout() {
         localStorage.removeItem('auth_token');

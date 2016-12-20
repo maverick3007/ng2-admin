@@ -1,19 +1,18 @@
 import {Injectable} from '@angular/core';
 import {BaThemeConfigProvider, colorHelper} from '../../../theme';
 
-import { Http, Response, Headers } from '@angular/http';
-import {ConstantsService} from '../../../services';
+import {AuthenticationService} from '../../../services';
 
 @Injectable()
 export class LiveSalesService {
-
-  constructor(private _baConfig:BaThemeConfigProvider, private _http: Http, private _const: ConstantsService) {
+  salesdata;
+  constructor(private _baConfig:BaThemeConfigProvider, private _auth: AuthenticationService) {
   }
 
-  
   getData() {
     let dashboardColors = this._baConfig.get().colors.dashboard;
 
+    this._auth.apiGet('livesales/20161220').subscribe(res => this.salesdata=res);
     return [
       {
         value: 2000,
