@@ -86,7 +86,7 @@ const NGA_PIPES = [
 const NGA_SERVICES = [
   BaImageLoaderService,
   BaThemePreloader,
-  BaThemeSpinner
+  BaThemeSpinner,
 ];
 
 const NGA_VALIDATORS = [

@@ -4,16 +4,9 @@
 import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
 import { enableProdMode, ApplicationRef } from '@angular/core';
 
-import { ConstantsService } from './services';
-import { AuthenticationService } from './services';
-import { AuthGuardService } from './services';
-
 // Environment Providers
 let PROVIDERS: any[] = [
   // common env directives
-  ConstantsService,
-  AuthenticationService,
-  AuthGuardService
 ];
 
 // Angular debug tools in the dev console
