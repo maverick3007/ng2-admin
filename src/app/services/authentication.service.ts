@@ -8,7 +8,7 @@ import { ConstantsService } from './constants.service';
 
 @Injectable()
 export class AuthenticationService {
-    public loggedIn = false;
+    private loggedIn = false;
     public userName = "jos";
 
     // store the URL so we can redirect after logging in
@@ -19,8 +19,15 @@ export class AuthenticationService {
     }
 
     login(username: String, password: String) {
-
         let creds = "grant_type=password&username=" + username + "&password=" + password;
+        this.getAuth(creds).subscribe(res => {
+            this.loggedIn = res;
+            this._router.navigate([ this.redirectUrl ]);
+    });
+    }
+
+    getAuth(creds: String)
+    {
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.post(this._const.root_url + 'Token', creds, {
@@ -57,10 +64,10 @@ export class AuthenticationService {
         return Observable.throw(errMsg);
     }
 
-    private extractJwt(res: Response) {
+    private extractJwt(res: Response, loggedin):boolean {
         let body = res.json();
         localStorage.setItem('auth_token', body.access_token);
-        this.loggedIn = true;
+        return true;
     }
 
     private extractData(res: Response) {
@@ -75,7 +82,7 @@ export class AuthenticationService {
     }
 
     isLoggedIn() {
-        return !!localStorage.getItem('auth_token');
+        return this.loggedIn;//!!localStorage.getItem('auth_token');
     }
 
 }

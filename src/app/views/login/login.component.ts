@@ -29,18 +29,7 @@ export class Login {
   public onSubmit(values: Object): void {
     this.submitted = true;
     if (this.form.valid) {
-      this._authenticationService.login(this.email.value, this.password.value).subscribe(
-        response => {
-          console.log('authentication success :' + this._authenticationService.redirectUrl);
-          
-        },
-        error => {
-          console.log('authentication fail');
-        },
-        () => {
-          console.log('authentication done');
-          this._router.navigate([ this._authenticationService.redirectUrl ]);
-        });
+      this._authenticationService.login(this.email.value, this.password.value);
     }
   }
 }
