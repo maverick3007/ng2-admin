@@ -16,6 +16,7 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', loadChildren: () => System.import('./dashboard/dashboard.module') },
+            { path: 'adveoshop', loadChildren: () => System.import('./adveoshop/adveoshop.module') },
         ]
     }
 ];

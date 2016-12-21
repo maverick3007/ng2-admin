@@ -34,6 +34,7 @@
   margin-top: -20px;
 }
 
+
 .small-container {
   .channels-info {
     display: none;
@@ -127,6 +128,20 @@
   .progress-bar {
     height: 4px;
     background-color: $progress-default;
+    box-shadow: none;
+  }
+}
+
+.channel-overprogress {
+  height: 4px;
+  border-radius: 0;
+  width: 100%;
+  margin-bottom: 0;
+  background-color: $progress-default;
+  box-shadow: none;
+  .progress-bar {
+    height: 4px;
+    background-color: $success;
     box-shadow: none;
   }
 }

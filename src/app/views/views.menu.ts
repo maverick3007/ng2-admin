@@ -13,6 +13,28 @@ export const PAGES_MENU = [
                         order: 0
                     }
                 }
+            },
+            {
+                path: 'adveoshop',
+                data: {
+                    menu: {
+                        title: 'Webshop',
+                        icon: 'ion-ios-cart',
+                        selected: false,
+                        expanded: false,
+                        order: 100,
+                    }
+                },
+                children: [
+                    {
+                        path: 'adveoorders',
+                        data: {
+                            menu: {
+                                title: 'Webshop orders',
+                            }
+                        }
+                    }
+                ]
             }]
     }
 ];
