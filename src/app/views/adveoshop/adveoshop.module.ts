@@ -3,6 +3,8 @@ import { CommonModule }  from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 
+import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
+
 import { routing }       from './adveoshop.routing';
 import { AdveoShop } from './adveoshop.component';
 import { AdveoOrders } from './adveoorders/adveoorders.component';
@@ -14,7 +16,9 @@ import { AdveoOrders } from './adveoorders/adveoorders.component';
     CommonModule,
     FormsModule,
     NgaModule,
-    routing
+    routing,
+    DropdownModule,
+    ModalModule
   ],
   declarations: [
     AdveoShop,

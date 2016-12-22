@@ -1,23 +1,79 @@
-<div class="horizontal-scroll">
-  <table class="table table-hover">
-    <thead>
-    <tr class="black-muted-bg">
-      <th class="align-right">OrderId</th>
-      <th class="align-right">Datum</th>
-      <th class="align-right">Waarde</th>
-      <th class="align-right">Klant</th>
-      <th class="align-right">Leveradres</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let order of orders" class="no-top-border" (click)="selectOrder(order)">
+<div class="row">
 
-      <td class="align-right">{{order.Id}}</td> 
-      <td class="align-right">{{order.DateNr}}</td>     
-      <td class="align-right">{{order.TotalValue}}</td>   
-      <td class="align-right"></td>   
-      <td class="align-right">{{order.DeliveryAddress.Line01}}<br/>{{order.DeliveryAddress.Street}}<br/>{{order.DeliveryAddress.City}} </td>   
-    </tr>
-    </tbody>
-  </table>
+		<ba-card  class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Bestellingen" baCardClass="large-card  with-scroll">
+            <div class="horizontal-scroll" >
+				<table class="table table-hover" *ngIf="(orders.length > 0)" >
+					<thead >
+						<tr class="black-muted-bg">
+							<th class="align-right">OrderId</th>
+							<th class="align-right">Datum</th>
+							<th class="align-right">Waarde</th>
+							<th class="align-right">Klant</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let order of orders" class="no-top-border" (click)="selectOrder(order)">
+
+							<td class="align-right">{{order.Id}}</td>
+							<td class="align-right">{{order.DateNr}}</td>
+							<td class="align-right">{{order.TotalValue}}</td>
+							<td class="align-right" >{{order.CustomerId}} {{order.Customer.Id}}<br/>{{order.Customer.Name}}</td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+            <div>
+                 <button *ngIf="(!isLoading  && (orders.length < nrOfOrders))" type="button" (click)="loadData()" class="btn btn-default btn-with-icon"><i class="ion-arrow-down-c"></i> laad meer</button>
+           </div>
+		</ba-card>
+
+	<ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Bestelling Detail" baCardClass="adveoorders-panel large-card with-scroll" *ngIf="hasSelectedOrder">
+		<div style="margin-bottom:10px;">
+            <button type="button" (click)="confirmCreateOrder()" class="btn btn-default btn-with-icon"><i class="ion-ios-download"></i> Bestelling registreren</button>
+        </div>
+        <div class="horizontal-scroll">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="align-right">WinnerId</th>
+						<th class="align-right">AdveoId</th>
+						<th class="align-right">Beschrijving</th>
+						<th class="align-right">Aantal</th>
+						<th class="align-right">Stukprijs</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let line of selectedOrder.WebOrderLines" [ngClass]="{danger: line.Status===2}">
+						<td class="align-right">{{ line.WinnerArticle.Id }}</td>
+						<td class="align-right">{{ line.WebId }}</td>
+						<td class="align-right">{{ line.WinnerArticle.Description }}</td>
+						<td class="align-right">{{ line.Qty }}</td>
+						<td class="align-right">{{ line.UnitPrice }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</ba-card>
+</div>
+
+<!-- Small modal -->
+<div bsModal #smModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" aria-label="Close" (click)="smModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Registratie Webbestelling</h4>
+      </div>
+      <div class="modal-body">
+        Bent u zeker dat deze webbestelling mag worden geregistreerd
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary confirm-btn" (click)="createOrder()">Registreren</button>
+      </div>
+    </div>
+  </div>
 </div>

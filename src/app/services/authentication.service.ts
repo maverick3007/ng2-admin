@@ -14,7 +14,7 @@ export class AuthenticationService {
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
-    constructor(private _http: Http, private _const: ConstantsService, private _router:Router) {
+    constructor(private _http: Http, private _const: ConstantsService, private _router: Router) {
         this.loggedIn = !!localStorage.getItem('auth_token');
     }
 
@@ -22,12 +22,11 @@ export class AuthenticationService {
         let creds = "grant_type=password&username=" + username + "&password=" + password;
         this.getAuth(creds).subscribe(res => {
             this.loggedIn = res;
-            this._router.navigate([ this.redirectUrl ]);
-    });
+            this._router.navigate([this.redirectUrl]);
+        });
     }
 
-    getAuth(creds: String)
-    {
+    getAuth(creds: String) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.post(this._const.root_url + 'Token', creds, {
@@ -35,7 +34,7 @@ export class AuthenticationService {
         }).map(this.extractJwt).catch(this.handleError)
     }
 
-    apiGet(apistring:string){
+    apiGet(apistring: string) {
         let authToken = localStorage.getItem('auth_token');
 
         let headers = new Headers();
@@ -44,10 +43,28 @@ export class AuthenticationService {
         return this._http.get(this._const.root_url + 'api/' + apistring, { headers: headers })
             .map(this.extractData)
             .catch(err => {
-                if (err.status  == 401){
+                if (err.status == 401) {
                     this.logout();
                     return Observable.arguments;
-                }else{
+                } else {
+                    this.handleError(err);
+                }
+            });
+    }
+
+    apiPost(apistring: string, postOb: Object) {
+        let authToken = localStorage.getItem('auth_token');
+
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+        return this._http.post(this._const.root_url + 'api/' + apistring, postOb, { headers: headers })
+            .map(this.extractData)
+            .catch(err => {
+                if (err.status == 401) {
+                    this.logout();
+                    return Observable.arguments;
+                } else {
                     this.handleError(err);
                 }
             });
@@ -62,10 +79,10 @@ export class AuthenticationService {
         return this._http.get(this._const.root_url + 'api/Account/UserInfo', { headers: headers })
             .map(this.extractData)
             .catch(err => {
-                if (err.status  == 401){
+                if (err.status == 401) {
                     this.logout();
                     return Observable.arguments;
-                }else{
+                } else {
                     this.handleError(err);
                 }
             });
@@ -78,11 +95,11 @@ export class AuthenticationService {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
-        
+
         return Observable.throw(errMsg);
     }
 
-    private extractJwt(res: Response, loggedin):boolean {
+    private extractJwt(res: Response, loggedin): boolean {
         let body = res.json();
         localStorage.setItem('auth_token', body.access_token);
         return true;
