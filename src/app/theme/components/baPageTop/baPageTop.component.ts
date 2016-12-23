@@ -29,6 +29,7 @@ export class BaPageTop {
   public scrolledChanged(isScrolled) {
     this.isScrolled = isScrolled;
   }
+  
 
   public signOut(){
     this._authenticationService.logout();

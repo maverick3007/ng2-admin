@@ -5,7 +5,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
   styles: [],
   template: `
     <ba-sidebar></ba-sidebar>
-    <ba-page-top></ba-page-top>
+    <ba-page-top  [userName]="userName"></ba-page-top>
     <div class="al-main">
       <div class="al-content">
         <ba-content-top></ba-content-top>
@@ -15,7 +15,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
     <footer class="al-footer clearfix">
       <div class="al-footer-right">Created with <i class="ion-heart"></i></div>
       <div class="al-footer-main clearfix">
-        <div class="al-copy">&copy; <a href="http://akveo.com">Akveo</a> 2016</div>
+        <div class="al-copy">&copy; <a href="http://www.ankabs.be">Anka Business Systems</a> 2016</div>
         <ul class="al-share clearfix">
           <li><i class="socicon socicon-facebook"></i></li>
           <li><i class="socicon socicon-twitter"></i></li>
@@ -29,6 +29,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
 })
 export class Views {
 
+  username = "Nikske";
   constructor() {
   }
 

@@ -12,6 +12,7 @@ import { AuthenticationService } from '../../../services';
 
 export class AdveoOrders implements OnInit {
   @ViewChild('smModal') confirmModal: ModalDirective;
+  @ViewChild('finalModal') finalModal: ModalDirective;
   hasSelectedOrder: boolean = false;
   nrOfOrders: number;
   nrOfPages: number;
@@ -19,28 +20,29 @@ export class AdveoOrders implements OnInit {
   orders: Array<Object> = [];
   selectedOrder: Object;
   isLoading: boolean = false;
+  resultOrderId:string ="";
 
-  constructor(private _auth: AuthenticationService) {
+  constructor(private _auth: AuthenticationService, ) {
   }
 
   ngOnInit() {
+
     this.loadData();
   }
 
   loadData() {
     this.isLoading = true;
     this.currentpage = this.currentpage + 1;
-    this._auth.apiGet('adveoorder?pger=25£' + this.currentpage).subscribe(data => this.convertToDData(data));
+    this._auth.apiGet('adveoorder?pger=20£' + this.currentpage + '&status=0').subscribe(data => this.convertToDData(data));
   }
 
   createOrder() {
     this.confirmModal.hide();
     this.orderfactory();
-    alert('go');
   }
 
   confirmCreateOrder() {
-    this.showChildModal();
+    this.confirmModal.show();
   }
 
   convertToDData(data) {
@@ -59,34 +61,54 @@ export class AdveoOrders implements OnInit {
     this.hasSelectedOrder = true;
   }
 
-  public showChildModal(): void {
+  public showyChildModal(): void {
     this.confirmModal.show();
   }
 
-  public hideChildModal(): void {
+  public hideyChildModal(): void {
     this.confirmModal.hide();
   }
 
-  public orderfactory(){
+  public orderfactory() {
     let doc = new Document();
     doc.date01 = this.selectedOrder['DateNr'];
+    doc.reference = this.selectedOrder['Id'];
     doc.customerId = this.selectedOrder['Customer'].Id;
     doc.doclines = new Array<DocLine>();
     for (var i = 0; i < this.selectedOrder['WebOrderLines'].length; i++) {
       let docl = new DocLine();
-      docl.seq=i;
-      docl.artId= this.selectedOrder['WebOrderLines'][i].WinnerArticle.Id;
+      docl.seq = i;
+      docl.artId = this.selectedOrder['WebOrderLines'][i].WinnerArticle.Id;
+      docl.artDescription = this.selectedOrder['WebOrderLines'][i].WebId;
       docl.qty = this.selectedOrder['WebOrderLines'][i].Qty;
       docl.unitPrice = this.selectedOrder['WebOrderLines'][i].UnitPrice;
       doc.doclines.push(docl);
     }
-    this._auth.apiPost('adveoorder/createdocument',doc).subscribe(data => this.endPost(data));
+    this._auth.apiPost('adveoorder/createdocument', doc).subscribe(data => this.endPost(data));
 
   }
 
-  endPost(data)
-  {
-    var test = data;
+  unSelectOrder() {
+    this.hasSelectedOrder = false;
+  }
+
+  hasUnknownArts(): boolean {
+    for (var i = 0; i < this.selectedOrder['WebOrderLines'].length; i++) {
+      if (this.selectedOrder['WebOrderLines'][i].WinnerArticle.Id == null) {
+        return true;
+      };
+    }
+    return false;
+  }
+
+  endPost(data) {
+    this.resultOrderId = data.Id;
+    this.currentpage = 0
+    this.unSelectOrder();
+    this.orders =[];
+    this.loadData();
+    this.finalModal.show();
+    
   }
 }
 
