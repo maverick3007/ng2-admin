@@ -35,6 +35,18 @@ export const PAGES_MENU = [
                         }
                     }
                 ]
-            }]
+            },
+            {
+                path: 'customers',
+                data: {
+                    menu: {
+                        title: 'Klanten',
+                        icon: 'ion-ios-people',
+                        selected: false,
+                        expanded: false,
+                        order: 200
+                    }
+                }
+            },]
     }
 ];

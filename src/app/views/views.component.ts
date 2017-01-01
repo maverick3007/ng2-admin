@@ -1,11 +1,12 @@
 import {Component, ViewEncapsulation} from '@angular/core';
+
 @Component({
   selector: 'views',
   encapsulation: ViewEncapsulation.None,
   styles: [],
   template: `
     <ba-sidebar></ba-sidebar>
-    <ba-page-top  [userName]="userName"></ba-page-top>
+    <ba-page-top ></ba-page-top>
     <div class="al-main">
       <div class="al-content">
         <ba-content-top></ba-content-top>
@@ -25,6 +26,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
       </div>
     </footer>
     <ba-back-top position="200"></ba-back-top>
+    <dialog-error></dialog-error>
     `
 })
 export class Views {
@@ -34,5 +36,6 @@ export class Views {
   }
 
   ngOnInit() {
+    
   }
 }

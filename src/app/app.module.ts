@@ -18,6 +18,8 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { ViewsModule } from './views/views.module';
+import {DialogModule} from './dialogs/dialog.module';
+
 
 
 
@@ -49,6 +51,7 @@ type StoreType = {
     ReactiveFormsModule,
     NgaModule.forRoot(),
     ViewsModule,
+    DialogModule,
     routing
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection

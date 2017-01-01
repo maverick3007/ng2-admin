@@ -3,40 +3,49 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers } from '@angular/http';
 
-
 import { ConstantsService } from './constants.service';
+import { MessageService } from './message.service';
+
+import {DialogError } from '../dialogs/dialog-error/dialog-error.component';
 
 @Injectable()
 export class AuthenticationService {
     private loggedIn = false;
-    public userName = "jos";
+    public userName;
+    public authToken;
 
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
-    constructor(private _http: Http, private _const: ConstantsService, private _router: Router) {
+    constructor(private _http: Http, private _const: ConstantsService, private _router: Router, private _messageService:MessageService) {
         this.loggedIn = !!localStorage.getItem('auth_token');
+        if(this.loggedIn)
+        {
+            this.getUser();
+        }
     }
 
     login(username: String, password: String) {
         let creds = "grant_type=password&username=" + username + "&password=" + password;
-        this.getAuth(creds).subscribe(res => {
+        let self = this;
+        this.getAuth(creds, self).subscribe(res => {
             this.loggedIn = res;
             this._router.navigate([this.redirectUrl]);
         });
     }
 
-    getAuth(creds: String) {
+    getAuth(creds: String, self) {
         let headers = new Headers();
+        
         headers.append('Content-Type', 'application/x-www-form-urlencoded');
         return this._http.post(this._const.root_url + 'Token', creds, {
             headers: headers
-        }).map(this.extractJwt).catch(this.handleError)
+        }).map(res => this.extractJwt(res, self)).catch(err=>this.handleError(err, self))
     }
 
     apiGet(apistring: string) {
         let authToken = localStorage.getItem('auth_token');
-
+        let self = this;
         let headers = new Headers();
         headers.append('Authorization', `Bearer ${authToken}`);
 
@@ -47,14 +56,14 @@ export class AuthenticationService {
                     this.logout();
                     return Observable.arguments;
                 } else {
-                    this.handleError(err);
+                    this.handleError(err, self);
                 }
             });
     }
 
     apiPost(apistring: string, postOb: Object) {
         let authToken = localStorage.getItem('auth_token');
-
+        let self = this;
         let headers = new Headers();
         headers.append('Authorization', `Bearer ${authToken}`);
 
@@ -65,14 +74,14 @@ export class AuthenticationService {
                     this.logout();
                     return Observable.arguments;
                 } else {
-                    this.handleError(err);
+                    this.handleError(err, self);
                 }
             });
     }
 
     getUser() {
         let authToken = localStorage.getItem('auth_token');
-
+        let self = this;
         let headers = new Headers();
         headers.append('Authorization', `Bearer ${authToken}`);
 
@@ -83,30 +92,33 @@ export class AuthenticationService {
                     this.logout();
                     return Observable.arguments;
                 } else {
-                    this.handleError(err);
+                    this.handleError(err, self);
                 }
             });
     }
 
-    private handleError(error: any) {
+    private handleError(error: any, self) {
         // In a real world app, we might use a remote logging infrastructure
         // We'd also dig deeper into the error to get a better message
 
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
-
+        self._messageService.announceError(errMsg);
         return Observable.throw(errMsg);
     }
 
-    private extractJwt(res: Response, loggedin): boolean {
+    private extractJwt(res: Response,self): boolean {
         let body = res.json();
+        self.authToken=body.access_token;
+        self.userName = body.userName;
         localStorage.setItem('auth_token', body.access_token);
         return true;
     }
 
     private extractData(res: Response) {
         let body = res.json();
+        
         return body;
     }
 

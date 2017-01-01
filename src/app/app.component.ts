@@ -6,7 +6,6 @@ import { layoutPaths } from './theme/theme.constants';
 import { BaThemeConfig } from './theme/theme.config';
 import {ComponentsHelper } from 'ng2-bootstrap';
 
-
 /*
  * App Component
  * Top Level Component

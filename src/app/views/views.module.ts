@@ -3,18 +3,17 @@ import { CommonModule }  from '@angular/common';
 
 import { routing }       from './views.routing';
 import { NgaModule } from '../theme/nga.module';
+import { DialogModule} from '../dialogs/dialog.module'
 
 import { Views } from './views.component';
 
-import { ConstantsService } from '../services';
-import { AuthenticationService } from '../services';
-import { AuthGuardService } from '../services';
+
 
 
 @NgModule({
-  imports: [CommonModule, NgaModule, routing],
+  imports: [CommonModule, NgaModule, DialogModule, routing],
   declarations: [Views],
-  providers: [ConstantsService,AuthenticationService,AuthGuardService]
+  providers: []
 })
 export class ViewsModule {
 }

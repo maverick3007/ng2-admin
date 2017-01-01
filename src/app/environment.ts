@@ -3,9 +3,14 @@
 // rc2 workaround
 import { enableDebugTools, disableDebugTools } from '@angular/platform-browser';
 import { enableProdMode, ApplicationRef } from '@angular/core';
+import { MessageService } from './services'
+import { ConstantsService } from './services';
+import { AuthenticationService } from './services';
+import { AuthGuardService } from './services';
 
 // Environment Providers
 let PROVIDERS: any[] = [
+  MessageService, ConstantsService,AuthenticationService,AuthGuardService
   // common env directives
 ];
 
