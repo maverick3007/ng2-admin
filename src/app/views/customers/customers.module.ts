@@ -1,9 +1,11 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule }  from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 
 import { CustomersComponent } from './customers.component';
+import { CustomerSearchComponent} from './customer-search/customer-search.component';
+import { CustomerDetailComponent} from './customer-detail/customer-detail.component';
 import { routing }       from './customers.routing';
 
 
@@ -12,12 +14,14 @@ import { routing }       from './customers.routing';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgaModule,
     routing
   ],
   declarations: [
     CustomersComponent,
-
+    CustomerSearchComponent,
+    CustomerDetailComponent
   ],
   providers: [
 

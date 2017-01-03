@@ -1,4 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
+import {Router } from '@angular/router';
+import { MessageService } from '../../services/message.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'customers',
@@ -7,8 +10,14 @@ import {Component, ViewEncapsulation} from '@angular/core';
   template: require('./customers.html')
 })
 export class CustomersComponent {
-
-  constructor() {
+  test= 'yoho';
+  customer;
+  subscription: Subscription;
+  constructor(private messageService: MessageService, private _router:Router) {
+    this.subscription = this.messageService.customerAnnounced$.subscribe(
+      value => {
+        this.customer = value;
+      });
   }
 
 }

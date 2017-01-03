@@ -1,0 +1,38 @@
+
+    <ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Zoeken klant" baCardClass="large-card  with-scroll">
+        <div *ngIf="loading">
+
+            <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="horizontal-scroll">
+            <div class="form-group row">
+                <div class="col-xs-2">
+                    <select class="form-control" id="searchType" [(ngModel)]="selectedFilter">
+      <option *ngFor="let filter of filters"  [value]="filter.id">{{filter.name}}</option>
+
+    </select>
+                </div>
+                <div class="col-xs-10">
+                    <input class="form-control searchline" [formControl]="searchString" type="text" id="example-search-input">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <table class="table table-hover" *ngIf="(customers.length > 0)">
+                    <tbody>
+                        <tr *ngFor="let customer of customers" class="no-top-border" (click)="selectCustomer(customer)">
+                            <td></td>
+                            <td class="align-left">{{customer.Name}}</td>
+                            <td class="align-right">{{customer.Address}}</td>
+                            <td class="align-right">{{customer.PostalCode}}</td>
+                            <td class="align-right">{{customer.City}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </ba-card>
+

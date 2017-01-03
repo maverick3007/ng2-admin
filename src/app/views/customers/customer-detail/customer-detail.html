@@ -1,0 +1,43 @@
+<ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Details" baCardClass="large-card  with-scroll">
+    <div *ngIf="loading">
+
+        <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="horizontal-scroll">
+        <form>
+            <div class="form-group">
+                <label for="name">Naam</label>
+                <input type="text" [(ngModel)]="customer.Name" class="form-control form-control-sm" id="name" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="address">Adres</label>
+                <input type="text" [(ngModel)]="customer.Address" class="form-control form-control-sm" id="address" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="pcode">Postcode</label>
+                <input type="text" [(ngModel)]="customer.PostalCode" class="form-control form-control-sm" id="pcode" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="city">Plaats</label>
+                <input type="text"  [(ngModel)]="customer.City" class="form-control form-control-sm" id="city" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="tel1">Tel1</label>
+                <input type="text" [(ngModel)]="customer.Tel1" class="form-control form-control-sm" id="tel1" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="tel2">Tel2</label>
+                <input type="text" [(ngModel)]="customer.Tel2" class="form-control form-control-sm" id="tel2" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" [(ngModel)]="customer.Email" class="form-control form-control-sm" id="email" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="vat">BTW</label>
+                <input type="text" [(ngModel)]="customer.VAT" class="form-control form-control-sm" id="vat" placeholder="">
+            </div>
+        </form>
+    </div>
+</ba-card>
