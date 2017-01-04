@@ -1,7 +1,8 @@
 import { Component, ViewEncapsulation, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap';
-
-import { AuthenticationService } from '../../../services';
+import {CustomerSearchComponent} from '../../customers/customer-search/customer-search'
+import { AuthenticationService, MessageService } from '../../../services';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'adveoorders',
@@ -21,14 +22,31 @@ export class AdveoOrders implements OnInit {
   selectedOrder: Object;
   isLoading: boolean = false;
   resultOrderId:string ="";
+  subscription: Subscription;
 
-  constructor(private _auth: AuthenticationService, ) {
-  }
+
+  constructor(private _auth: AuthenticationService, private _message : MessageService) {
+    this.subscription = this._message.customerAnnounced$.subscribe(
+    value =>{
+      this.linkCustomer(value['Id']);
+    })
+}
 
   ngOnInit() {
 
     this.loadData();
   }
+
+linkCustomer(id){
+  this._auth.apiGet('adveoorder/createcustomerlink?Adveoid=' + this.selectedOrder['CustomerId'] + '&WinnerId=' + id  ).subscribe(() => {
+        this.currentpage = this.currentpage -1;
+        this.orders = [];
+    this.hasSelectedOrder = false;
+    this.loadData();
+  });
+}
+
+
 
   loadData() {
     this.isLoading = true;
@@ -109,6 +127,10 @@ export class AdveoOrders implements OnInit {
     this.loadData();
     this.finalModal.show();
     
+  }
+
+  linkCust(){
+    this._message.announceCustSelect("go")
   }
 }
 

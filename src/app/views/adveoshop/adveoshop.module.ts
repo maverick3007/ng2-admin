@@ -8,6 +8,7 @@ import { DropdownModule, ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { routing }       from './adveoshop.routing';
 import { AdveoShop } from './adveoshop.component';
 import { AdveoOrders } from './adveoorders/adveoorders.component';
+import { CustomerSearchComponent } from '../customers/customer-search/customer-search.component';
 //import { ChartistJsService } from './components/chartistJs/chartistJs.service';
 
 
@@ -18,11 +19,12 @@ import { AdveoOrders } from './adveoorders/adveoorders.component';
     NgaModule,
     routing,
     DropdownModule,
-    ModalModule
+    ModalModule,
+    
   ],
   declarations: [
     AdveoShop,
-    AdveoOrders
+    AdveoOrders 
   ],
   providers: [
 
