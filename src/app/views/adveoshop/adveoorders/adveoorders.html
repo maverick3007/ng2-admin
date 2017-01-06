@@ -1,6 +1,6 @@
 <div class="row">
 
-	<ba-card *ngIf="!(hasSelectedOrder)" class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Bestellingen" baCardClass="large-card  with-scroll">
+	<ba-card *ngIf="!(hasSelectedOrder)" class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Bestellingen" baCardClass="orders-card  with-scroll">
 		<div *ngIf="(orders.length == 0)">
 			
 			<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
@@ -55,7 +55,7 @@
 			</tr>
 		</table>
 	</ba-card>
-	<ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Bestelling Detail" baCardClass="adveoorders-panel large-card with-scroll"
+	<ba-card class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Bestelling Detail" baCardClass="adveoorders-panel orders-card with-scroll"
 		*ngIf="hasSelectedOrder">
 		<div style="margin-bottom:10px;">
 			<button type="button" (click)="unSelectOrder()" class="btn btn-default btn-with-icon"><i class="ion-arrow-left-c"></i> Terug</button>
