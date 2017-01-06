@@ -1,7 +1,6 @@
 import {Component, ViewEncapsulation, ElementRef, OnInit} from '@angular/core';
 
 import {Chart} from './liveSales.loader.ts';
-import {LiveSalesService} from './liveSales.service';
 
 import {BaThemeConfigProvider, colorHelper} from '../../../theme';
 import {AuthenticationService} from '../../../services';
@@ -22,7 +21,7 @@ export class LiveSales implements OnInit {
   TotalRevenue: number=0;
   public latestUpdate:Date;
   public reportDate:Date;
-  constructor(private liveSalesService:LiveSalesService, private _auth: AuthenticationService, private _baConfig:BaThemeConfigProvider) {
+  constructor( private _auth: AuthenticationService, private _baConfig:BaThemeConfigProvider) {
   }
 
   ngOnInit() {
