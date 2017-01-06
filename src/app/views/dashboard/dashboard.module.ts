@@ -7,7 +7,6 @@ import { Dashboard } from './dashboard.component';
 import { LiveSales } from './liveSales/liveSales.component';
 import { routing }       from './dashboard.routing';
 
-import { LiveSalesService } from './liveSales/liveSales.service';
 
 
 @NgModule({
@@ -22,7 +21,6 @@ import { LiveSalesService } from './liveSales/liveSales.service';
     LiveSales
   ],
   providers: [
-    LiveSalesService
   ]
 })
 export default class DashboardModule {}
