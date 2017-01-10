@@ -28,7 +28,7 @@ export class CustomerDocumentsComponent {
     }
 
     extractDocuments(res){
-        this.documents = res;
+        this.documents = res.Results;
     }
 
 }
