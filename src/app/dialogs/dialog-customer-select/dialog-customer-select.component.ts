@@ -17,6 +17,8 @@ export class DialogCustomerSelect {
     @ViewChild('custselectModal') Modal: ModalDirective;
     subscription: Subscription;
     title: String = 'titel';
+    filters: Array<filter> = [{id:'name', name:'naam'},{id:'street', name:'adres'}]
+    selectedFilter='name';
     customers = [];
     selectedCustomer;
     searchString = new FormControl();
@@ -27,7 +29,7 @@ export class DialogCustomerSelect {
             });
         this.searchString.valueChanges
             .debounceTime(700)
-            .subscribe(searchString => this._auth.apiGet('customer?name=' + searchString)
+            .subscribe(searchString => this._auth.apiGet('customer?'+ this.selectedFilter + '='  + searchString)
                 .subscribe(customers => this.extractCustomers(customers)));
 
     }
@@ -49,4 +51,9 @@ export class DialogCustomerSelect {
     public showDialog(): void {
         this.Modal.show();
     }
+}
+
+class filter {
+    id:string;
+    name: string;
 }

@@ -1,47 +1,49 @@
 <div bsModal #custselectModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" (click)="custselectModal.hide()" aria-label="Close">
+	aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" (click)="custselectModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-                <h4 class="modal-title">Selecteer een klant</h4>
-            </div>
-            <div class="modal-body" style="background: black">
-<form class="form-horizontal" role="form">
-    <div class="form-group row">
-        <div class="col-xs-1">
-            <label>naam:</label>
-        </div>
-        <div class="col-xs-11">
-            <input class="form-control searchline" [formControl]="searchString" type="text" id="example-search-input">
+				<h4 class="modal-title">Selecteer een klant</h4>
+			</div>
+			<div class="modal-body" style="background: black">
 
-        </div>
-    </div>
-</form>
-<ba-card class="row" baCardClass="custsearch-card  with-scroll">
-    <table class="table table-hover">
-        <tbody>
-            <tr *ngFor="let customer of customers" class="no-top-border" (click)="pickCustomer(customer)">
-                <td></td>
-                <td class="align-left">{{customer.Name}}</td>
-                <td class="align-right">{{customer.Address}}</td>
-                <td class="align-right">{{customer.PostalCode}}</td>
-                <td class="align-right">{{customer.City}}</td>
+					<div class="form-group row">
+						<div class="col-xs-4">
+							<select class="form-control" id="searchType" [(ngModel)]="selectedFilter">
+      <option *ngFor="let filter of filters"  [value]="filter.id">{{filter.name}}</option>
 
-            </tr>
-        </tbody>
-    </table>
-</ba-card>
-</div>
+    </select></div>
+							<div class="col-xs-8">
+								<input class="form-control searchline" [formControl]="searchString" type="text" id="example-search-input">
 
-<div class="modal-footer">
-    <div *ngIf="!!selectedCustomer">
-    <p>{{selectedCustomer.Id}} {{selectedCustomer.Name}}</p>
-    <button class="btn btn-primary confirm-btn" (click)="selectCustomer()">Selecteer</button>
-    <div>
-</div>
-</div>
-</div>
-</div>
+							</div>
+						</div>
+			
+				<ba-card class="row" baCardClass="custsearch-card  with-scroll">
+					<table class="table table-hover">
+						<tbody>
+							<tr *ngFor="let customer of customers" class="no-top-border" (click)="pickCustomer(customer)">
+								<td></td>
+								<td class="align-left">{{customer.Name}}</td>
+								<td class="align-right">{{customer.Address}}</td>
+								<td class="align-right">{{customer.PostalCode}}</td>
+								<td class="align-right">{{customer.City}}</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</ba-card>
+				</div>
+
+				<div class="modal-footer">
+					<div *ngIf="!!selectedCustomer">
+						<p>{{selectedCustomer.Id}} {{selectedCustomer.Name}}</p>
+						<button class="btn btn-primary confirm-btn" (click)="selectCustomer()">Selecteer</button>
+						<div>
+						</div>
+					</div>
+				</div>
+			</div>
