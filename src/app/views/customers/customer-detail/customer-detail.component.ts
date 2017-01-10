@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { AuthenticationService } from '../../../services';
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs/Subscription' ;
 
 export class CustomerDetailComponent {
     subscription: Subscription;
-    customer ;
+    @Input() customer: Object;
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
         this.subscription = this.messageService.customerAnnounced$.subscribe(
             value => {
@@ -24,6 +24,10 @@ export class CustomerDetailComponent {
 
     getCustomer(id){
         this._auth.apiGet('customer/' + id).subscribe(result => this.customer = result);
+    }
+
+    reSearchCustomer(){
+        this.messageService.announceCustSelect("go")
     }
 
 }

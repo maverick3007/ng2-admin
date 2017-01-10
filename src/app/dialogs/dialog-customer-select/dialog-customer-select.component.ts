@@ -21,10 +21,14 @@ export class DialogCustomerSelect {
     selectedFilter='name';
     customers = [];
     selectedCustomer;
-    searchString = new FormControl();
+    searchString = new FormControl('');
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
         this.subscription = this.messageService.custSelectAnnounced$.subscribe(
             value => {
+                this.searchString.reset();
+                this.selectedFilter='name';
+                this.selectedCustomer = null;
+                this.customers = [];
                 this.showDialog();
             });
         this.searchString.valueChanges

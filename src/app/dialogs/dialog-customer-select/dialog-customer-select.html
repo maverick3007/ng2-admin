@@ -17,7 +17,7 @@
 
     </select></div>
 							<div class="col-xs-8">
-								<input class="form-control searchline" [formControl]="searchString" type="text" id="example-search-input">
+								<input class="form-control  form-control-lg" [formControl]="searchString" type="text" id="example-search-input">
 
 							</div>
 						</div>
@@ -25,7 +25,7 @@
 				<ba-card class="row" baCardClass="custsearch-card  with-scroll">
 					<table class="table table-hover">
 						<tbody>
-							<tr *ngFor="let customer of customers" class="no-top-border" (click)="pickCustomer(customer)">
+							<tr *ngFor="let customer of customers" [class.info]="(selectedCustomer === customer)" class="no-top-border" (click)="pickCustomer(customer)">
 								<td></td>
 								<td class="align-left">{{customer.Name}}</td>
 								<td class="align-right">{{customer.Address}}</td>
