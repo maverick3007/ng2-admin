@@ -15,7 +15,9 @@ import { Subscription } from 'rxjs/Subscription' ;
 export class CustomerDocumentsComponent {
     subscription: Subscription;
     @Input() customer: Object;
+    loading = false;
     documents: Array<Object> = [];
+    selectedDocument: Object;
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
         this.subscription = this.messageService.customerAnnounced$.subscribe(
             value => {
@@ -24,11 +26,21 @@ export class CustomerDocumentsComponent {
     }
 
     getCustomerDocuments(id){
+        this.loading = true;
         this._auth.apiGet('customer/' + id + '/documents').subscribe(result => this.extractDocuments(result));
     }
 
     extractDocuments(res){
+        this.loading = false;
         this.documents = res.Results;
+    }
+
+    pickDocument(doc){
+        this.selectedDocument = doc
+    }
+
+    selectCustomer(){
+        this.messageService.announceDocView(this.selectedDocument['Id']);
     }
 
 }

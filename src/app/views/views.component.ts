@@ -28,6 +28,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
     <ba-back-top position="200"></ba-back-top>
     <dialog-error></dialog-error>
     <dialog-customer-select></dialog-customer-select>
+    <dialog-document-view></dialog-document-view>
     `
 })
 export class Views {

@@ -3,12 +3,13 @@ import { CommonModule }  from '@angular/common';
 import { ModalModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { NgaModule } from '../theme/nga.module';
 import {DialogError} from './dialog-error/dialog-error.component';
-import{ DialogCustomerSelect } from './dialog-customer-select/dialog-customer-select.component'
+import{ DialogCustomerSelect } from './dialog-customer-select/dialog-customer-select.component';
+import{ DialogDocumentView } from './dialog-document-view/dialog-document-view.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const DIA_COMPONENTS = [
-DialogError, DialogCustomerSelect]
+DialogError, DialogCustomerSelect, DialogDocumentView]
 
 @NgModule({
   declarations: [
