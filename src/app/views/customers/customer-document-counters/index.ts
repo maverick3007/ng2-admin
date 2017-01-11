@@ -1,1 +1,1 @@
-export * from './customer-document-counters';
+export * from './customer-document-counters.component';

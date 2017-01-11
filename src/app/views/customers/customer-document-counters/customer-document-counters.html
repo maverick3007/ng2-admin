@@ -1,0 +1,11 @@
+<div class="btns-same-width-lg"> 
+<div class="button-wrapper" *ngFor="let counter of specialDocs">
+    <button type="button" class="btn btn-info btn-with-icon"><i class="ion-document-text"></i>{{counter.Object.Id}} {{counter.Object.Name}} ({{counter.Counter}})</button>
+</div>
+<div class="button-wrapper" *ngFor="let counter of ubDocs">
+    <button type="button" class="btn btn-warning btn-with-icon"><i class="ion-document-text"></i>{{counter.Object.Id}} {{counter.Object.Name}} ({{counter.Counter}})</button>
+</div>
+<div class="button-wrapper" *ngFor="let counter of ulDocs">
+    <button type="button" class="btn btn-primary btn-with-icon"><i class="ion-document-text"></i>{{counter.Object.Id}} {{counter.Object.Name}} ({{counter.Counter}})</button>
+</div>
+</div>

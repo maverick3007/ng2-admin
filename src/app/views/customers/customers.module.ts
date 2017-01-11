@@ -7,6 +7,7 @@ import { CustomersComponent } from './customers.component';
 import { CustomerSearchComponent} from './customer-search/customer-search.component';
 import { CustomerDetailComponent} from './customer-detail/customer-detail.component';
 import { CustomerDocumentsComponent} from './customer-documents/customer-documents.component';
+import { CustomerDocumentCountersComponent} from './customer-document-counters/customer-document-counters.component';
 import { routing }       from './customers.routing';
 
 
@@ -23,7 +24,8 @@ import { routing }       from './customers.routing';
     CustomersComponent,
     CustomerSearchComponent,
     CustomerDetailComponent,
-    CustomerDocumentsComponent
+    CustomerDocumentsComponent,
+    CustomerDocumentCountersComponent
   ],
   providers: [
 

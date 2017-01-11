@@ -5,6 +5,9 @@ import {Component, ViewEncapsulation} from '@angular/core';
   encapsulation: ViewEncapsulation.None,
   styles: [],
   template: `
+      <dialog-error></dialog-error>
+    <dialog-customer-select></dialog-customer-select>
+    <dialog-document-view></dialog-document-view>
     <ba-sidebar></ba-sidebar>
     <ba-page-top ></ba-page-top>
     <div class="al-main">
@@ -26,9 +29,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
       </div>
     </footer>
     <ba-back-top position="200"></ba-back-top>
-    <dialog-error></dialog-error>
-    <dialog-customer-select></dialog-customer-select>
-    <dialog-document-view></dialog-document-view>
+
     `
 })
 export class Views {
