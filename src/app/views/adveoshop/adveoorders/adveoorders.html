@@ -1,12 +1,13 @@
 <div class="row">
 
 	<ba-card *ngIf="!(hasSelectedOrder)" class="col-xlg-6 col-xl-6 col-lg-12 col-sm-12 col-xs-12" title="Bestellingen" baCardClass="orders-card  with-scroll">
-		<div *ngIf="(orders.length == 0)">
+		<div *ngIf="(isLoading)">
 			
 			<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
 			<span class="sr-only">Loading...</span>
 		</div>
 		<div class="horizontal-scroll">
+			<div *ngIf="(orders.length == 0)"><p>Er zijn geen onverwerkte bestellingen...</p></div>
 			<table class="table table-hover" *ngIf="(orders.length > 0)">
 				<thead>
 					<tr class="black-muted-bg">
