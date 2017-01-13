@@ -17,11 +17,13 @@ export class CustomerDocumentCountersComponent {
     specialDocs:Array<Object>;
     ubDocs:Array<Object>;
     ulDocs:Array<Object>;
+    loading = false;
     @Input() customer: Object;
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
         this.specialDocs= [];
         this.ubDocs=[];
         this.ulDocs=[];
+        this.loading = false;
         this.subscription = this.messageService.customerAnnounced$.subscribe(
             value => {
                 this.getCustomerDocumentCounters(value['Id']);
@@ -29,11 +31,17 @@ export class CustomerDocumentCountersComponent {
     }
 
     getCustomerDocumentCounters(id){
+        this.loading=true;
         this._auth.apiGet('customer/' + id + '/documentcounters').subscribe(result => this.populateCounters(result));
+    }
+
+    gotoDocSelection(counter){
+        this.messageService.announceDocSelect('custid=' + this.customer['Id'] + '&doctypes=' + counter.Object.Id);
     }
 
     populateCounters(res){
         var self = this;
+        this.loading = false;
         for(var i=0; i < res.length ; i++){
             let counterline = res[i];
             if(counterline.Counter > 0){

@@ -7,6 +7,7 @@ export class MessageService {
 // Observable string sources
     private errorAnnouncedSource = new Subject<string>();
     private custSelectAnnouncedSource = new Subject<string>();
+    private docSelectAnnouncedSource = new Subject<string>();
     private docViewAnnouncedSource = new Subject<string>();
 
     // Observable object sources
@@ -15,6 +16,7 @@ private customerAnnouncedSource = new Subject<Object>();
 // Observable string streams
   errorAnnounced$ = this.errorAnnouncedSource.asObservable();
   custSelectAnnounced$ = this.custSelectAnnouncedSource.asObservable();
+  docSelectAnnounced$ = this.docSelectAnnouncedSource.asObservable();
   customerAnnounced$ = this.customerAnnouncedSource.asObservable();
   docViewAnnounced$ = this.docViewAnnouncedSource.asObservable();
 
@@ -25,6 +27,10 @@ private customerAnnouncedSource = new Subject<Object>();
 
   announceCustSelect(text: string) {
     this.custSelectAnnouncedSource.next(text);
+  }
+
+  announceDocSelect(text: string) {
+    this.docSelectAnnouncedSource.next(text);
   }
 
   announceCustomer(customer: Object){

@@ -7,7 +7,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
   template: `
       <dialog-error></dialog-error>
     <dialog-customer-select></dialog-customer-select>
-    <dialog-document-view></dialog-document-view>
+    <dialog-document-select></dialog-document-select>
     <ba-sidebar></ba-sidebar>
     <ba-page-top ></ba-page-top>
     <div class="al-main">

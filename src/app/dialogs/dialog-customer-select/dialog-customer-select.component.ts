@@ -16,9 +16,10 @@ import { Subscription } from 'rxjs/Subscription';
 export class DialogCustomerSelect {
     @ViewChild('custselectModal') Modal: ModalDirective;
     subscription: Subscription;
+    errNotifier: Subscription;
     title: String = 'titel';
-    filters: Array<filter> = [{id:'name', name:'naam'},{id:'street', name:'adres'}]
-    selectedFilter='name';
+    filters: Array<filter> = [{ id: 'name', name: 'naam' }, { id: 'street', name: 'adres' }]
+    selectedFilter = 'name';
     customers = [];
     selectedCustomer;
     searchString = new FormControl('');
@@ -26,14 +27,19 @@ export class DialogCustomerSelect {
         this.subscription = this.messageService.custSelectAnnounced$.subscribe(
             value => {
                 this.searchString.reset();
-                this.selectedFilter='name';
+                this.selectedFilter = 'name';
                 this.selectedCustomer = null;
                 this.customers = [];
                 this.showDialog();
             });
+        this.errNotifier = this.messageService.errorAnnounced$.subscribe(
+            value => {
+
+                this.Modal.hide();
+            });
         this.searchString.valueChanges
             .debounceTime(700)
-            .subscribe(searchString => this._auth.apiGet('customer?'+ this.selectedFilter + '='  + searchString)
+            .subscribe(searchString => this._auth.apiGet('customer?' + this.selectedFilter + '=' + searchString)
                 .subscribe(customers => this.extractCustomers(customers)));
 
     }
@@ -43,11 +49,11 @@ export class DialogCustomerSelect {
 
     }
 
-    pickCustomer(cust){
+    pickCustomer(cust) {
         this.selectedCustomer = cust
     }
-    
-    selectCustomer(){
+
+    selectCustomer() {
         this.Modal.hide();
         this.messageService.announceCustomer(this.selectedCustomer);
     }
@@ -58,6 +64,6 @@ export class DialogCustomerSelect {
 }
 
 class filter {
-    id:string;
+    id: string;
     name: string;
 }

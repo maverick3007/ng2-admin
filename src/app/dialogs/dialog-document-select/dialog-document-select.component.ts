@@ -7,7 +7,7 @@ import { AuthenticationService } from '../../services';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-    selector: 'dialog-customer-select',
+    selector: 'dialog-document-select',
     encapsulation: ViewEncapsulation.None,
     styles: [require('./dialog-document-select.scss')],
     template: require('./dialog-document-select.html'),
@@ -16,36 +16,53 @@ import { Subscription } from 'rxjs/Subscription';
 export class DialogDocumentSelect {
     @ViewChild('docselectModal') Modal: ModalDirective;
     subscription: Subscription;
-    documents = [];
+    errNotifier: Subscription;
+    hasMoreEntries = false;
+    loading = false;
+    pageNr;
+    searchString;
+    documents: Array<Object> = [];
     selectedDocument;
-    searchString = new FormControl('');
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.subscription = this.messageService.custSelectAnnounced$.subscribe(
+        this.subscription = this.messageService.docSelectAnnounced$.subscribe(
             value => {
-                this.searchString.reset();
                 this.selectedDocument = null;
                 this.documents = [];
                 this.showDialog();
+                this.searchString='document?' + value
+                this.loading = true;
+                this._auth.apiGet(this.searchString)
+                    .subscribe(docs => this.extractDocuments(docs))
             });
-        this.searchString.valueChanges
-            .debounceTime(700)
-            .subscribe(searchString => this._auth.apiGet('documents'  + searchString)
-                .subscribe(docs => this.extractDocuments(docs)));
+        this.errNotifier = this.messageService.errorAnnounced$.subscribe(
+            value => {
 
+                this.Modal.hide();
+            });
     }
 
     extractDocuments(docs) {
-        this.documents = docs;
-
+        this.loading = false;
+        this.pageNr = docs.Page;
+        (docs.Page == docs.Pages)?this.hasMoreEntries = false:this.hasMoreEntries = true;
+        for (var i = 0; i < docs.Results.length; i++){
+            this.documents.push(docs.Results[i]);
+        }
     }
 
-    pickCustomer(doc){
+    loadMore(){
+        this.pageNr++;
+        this._auth.apiGet(this.searchString + '&pger=' + this.pageNr)
+                    .subscribe(docs => this.extractDocuments(docs))        
+    }
+
+    pickDocument(doc) {
         this.selectedDocument = doc
     }
-    
-    selectCustomer(){
+
+    selectDocument() {
         this.Modal.hide();
-        this.messageService.announceCustomer(this.selectedDocument);
+        // this.messageService.announceCustomer(this.selectedDocument);
     }
 
     public showDialog(): void {
