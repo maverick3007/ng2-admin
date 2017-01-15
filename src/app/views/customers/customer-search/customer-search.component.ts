@@ -1,41 +1,30 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {Component, ViewEncapsulation, OnInit} from '@angular/core';
+import {Router } from '@angular/router';
+import { MessageService } from '../../../services/message.service';
+import { Subscription } from 'rxjs/Subscription';
 
-import { AuthenticationService } from '../../../services';
-import { MessageService } from '../../../services';
+//import {CustomerIdentityComponent} from '../customers/customer-identity/customer-identity'
 
 @Component({
-    selector: 'customer-search',
-    encapsulation: ViewEncapsulation.None,
-    styles: [require('./customer-search.scss')],
-    template: require('./customer-search.html')
+  selector: 'customer-search',
+  encapsulation: ViewEncapsulation.None,
+  styles: [require('./customer-search.scss')],
+  template: require('./customer-search.html')
 })
+export class CustomerSearchComponent implements OnInit {
+  test= 'yoho';
+  customer;
+  subscription: Subscription;
+  constructor(private messageService: MessageService, private _router:Router) {
+    this.subscription = this.messageService.customerAnnounced$.subscribe(
+      value => {
+        this.customer = value;
+      });
+  }
 
-export class CustomerSearchComponent {
-    searchString = new FormControl();
-    filters: Array<filter> = [{id:'name', name:'naam'},{id:'street', name:'adres'}]
-    selectedFilter='name';
-    customers = [];
-    showAndTell = "";
-    
-    constructor(private _auth: AuthenticationService, private _messageService:MessageService) {
-        this.searchString.valueChanges
-            .debounceTime(700)
-            .subscribe(searchString => this._auth.apiGet('customer?'+ this.selectedFilter + '=' + searchString)
-                .subscribe(customers => this.extractCustomers(customers)));
-    }
+  ngOnInit(){
+    this.messageService.announceCustSelect("go")
+  }
 
-    extractCustomers(custs){
-        this.customers = custs;
 
-    }
-
-    selectCustomer(cust){
-        this._messageService.announceCustomer(cust);
-    }
-}
-
-class filter {
-    id:string;
-    name: string;
 }

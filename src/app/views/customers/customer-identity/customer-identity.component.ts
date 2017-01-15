@@ -6,13 +6,13 @@ import { MessageService } from '../../../services';
 import { Subscription } from 'rxjs/Subscription' ;
 
 @Component({
-    selector: 'customer-detail',
+    selector: 'customer-identity',
     encapsulation: ViewEncapsulation.None,
-    styles: [require('./customer-detail.scss')],
-    template: require('./customer-detail.html')
+    styles: [require('./customer-identity.scss')],
+    template: require('./customer-identity.html')
 })
 
-export class CustomerDetailComponent {
+export class CustomerIdentityComponent {
     subscription: Subscription;
     @Input() customer: Object;
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {

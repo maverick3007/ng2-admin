@@ -3,7 +3,7 @@ import {Router } from '@angular/router';
 import { MessageService } from '../../services/message.service';
 import { Subscription } from 'rxjs/Subscription';
 
-import {CustomerSearchComponent} from '../customers/customer-search/customer-search'
+//import {CustomerIdentityComponent} from '../customers/customer-identity/customer-identity'
 
 @Component({
   selector: 'customers',

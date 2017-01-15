@@ -5,7 +5,8 @@ import { NgaModule } from '../../theme/nga.module';
 
 import { CustomersComponent } from './customers.component';
 import { CustomerSearchComponent} from './customer-search/customer-search.component';
-import { CustomerDetailComponent} from './customer-detail/customer-detail.component';
+import { CustomerDetailsComponent} from './customer-details/customer-details.component';
+import { CustomerIdentityComponent} from './customer-identity/customer-identity.component';
 import { CustomerDocumentsComponent} from './customer-documents/customer-documents.component';
 import { CustomerDocumentCountersComponent} from './customer-document-counters/customer-document-counters.component';
 import { routing }       from './customers.routing';
@@ -22,8 +23,9 @@ import { routing }       from './customers.routing';
   ],
   declarations: [
     CustomersComponent,
+    CustomerDetailsComponent,
     CustomerSearchComponent,
-    CustomerDetailComponent,
+    CustomerIdentityComponent,
     CustomerDocumentsComponent,
     CustomerDocumentCountersComponent
   ],
