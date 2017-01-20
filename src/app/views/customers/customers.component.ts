@@ -19,10 +19,16 @@ export class CustomersComponent implements OnInit {
     this.subscription = this.messageService.customerAnnounced$.subscribe(
       value => {
         this.customer = value;
+        let id = value['Id']
+        this._router.navigate(['/views/customers/customerdetails', id ]);
       });
   }
 
   ngOnInit(){
+    
+  }
+
+  search(){
     this.messageService.announceCustSelect("go")
   }
 

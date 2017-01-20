@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, OnInit} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from '../../../services';
 import { AuthenticationService } from '../../../services';
@@ -11,17 +11,17 @@ import { Subscription } from 'rxjs/Subscription';
   template: require('./customer-details.html')
 })
 
-export class CustomerDetailsComponent implements OnInit {
+export class CustomerDetailsComponent  {
     customer;
     constructor(private route: ActivatedRoute, private messageService: MessageService, private auth: AuthenticationService){
-    }
-
-    ngOnInit(){
-        this.route.params
+                this.route.params
         .map(params => params['id'])
         .switchMap(id => this.auth.apiGet('customer/' + id ))
         .subscribe(customer => this.customer = customer);
     }
+
+    
+
 
 
 }

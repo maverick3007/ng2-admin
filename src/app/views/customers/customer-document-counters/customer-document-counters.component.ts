@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { AuthenticationService } from '../../../services';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription' ;
     template: require('./customer-document-counters.html')
 })
 
-export class CustomerDocumentCountersComponent {
+export class CustomerDocumentCountersComponent implements OnChanges{
     subscription: Subscription;
     specialDocs:Array<Object>;
     ubDocs:Array<Object>;
@@ -20,18 +20,24 @@ export class CustomerDocumentCountersComponent {
     loading = false;
     @Input() customer: Object;
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.specialDocs= [];
-        this.ubDocs=[];
-        this.ulDocs=[];
-        this.loading = false;
-        this.subscription = this.messageService.customerAnnounced$.subscribe(
-            value => {
-                this.getCustomerDocumentCounters(value['Id']);
-            });
+
     }
+
+    ngOnChanges() {
+        if (!!this.customer) {
+         this.loading = false;
+        let Id = this.customer['Id'];
+        this.getCustomerDocumentCounters(Id);
+        }
+
+    }
+
 
     getCustomerDocumentCounters(id){
         this.loading=true;
+        this.specialDocs= [];
+        this.ubDocs=[];
+        this.ulDocs=[];
         this._auth.apiGet('customer/' + id + '/documentcounters').subscribe(result => this.populateCounters(result));
     }
 

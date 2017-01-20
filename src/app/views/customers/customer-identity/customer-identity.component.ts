@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { AuthenticationService } from '../../../services';
@@ -12,22 +12,25 @@ import { Subscription } from 'rxjs/Subscription' ;
     template: require('./customer-identity.html')
 })
 
-export class CustomerIdentityComponent {
+export class CustomerIdentityComponent implements OnChanges {
     subscription: Subscription;
     @Input() customer: Object;
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.subscription = this.messageService.customerAnnounced$.subscribe(
-            value => {
-                this.getCustomer(value['Id']);
-            });
+        //this.subscription = this.messageService.customerAnnounced$.subscribe(
+         //   value => {
+         //       this.getCustomer(value['Id']);
+           // });
+    }
+
+    ngOnChanges() {
+        if (!!this.customer) {
+        let Id = (this.customer['Id']);
+        this.getCustomer(Id)}
     }
 
     getCustomer(id){
         this._auth.apiGet('customer/' + id).subscribe(result => this.customer = result);
     }
 
-    reSearchCustomer(){
-        this.messageService.announceCustSelect("go")
-    }
 
 }
