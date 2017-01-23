@@ -3,24 +3,22 @@ import {Router } from '@angular/router';
 import { MessageService } from '../../services/message.service';
 import { Subscription } from 'rxjs/Subscription';
 
-//import {CustomerIdentityComponent} from '../customers/customer-identity/customer-identity'
-
 @Component({
-  selector: 'customers',
+  selector: 'documents',
   encapsulation: ViewEncapsulation.None,
-  styles: [require('./customers.scss')],
-  template: require('./customers.html')
+  styles: [require('./documents.scss')],
+  template: require('./documents.html')
 })
-export class CustomersComponent implements OnInit {
+export class DocumentsComponent implements OnInit {
   test= 'yoho';
-  customer;
+  document;
   subscription: Subscription;
   constructor(private messageService: MessageService, private _router:Router) {
-    this.subscription = this.messageService.customerAnnounced$.subscribe(
+    this.subscription = this.messageService.documentAnnounced$.subscribe(
       value => {
-        this.customer = value;
+        this.document = value;
         let id = value['Id']
-        this._router.navigate(['/views/customers/customerdetails', id ]);
+        this._router.navigate(['/views/documents/documentdetails', id ]);
       });
   }
 
@@ -29,7 +27,7 @@ export class CustomersComponent implements OnInit {
   }
 
   search(){
-    this.messageService.announceCustSelectPopup("go")
+    this.messageService.announceDocSelectPopup("");
   }
 
 

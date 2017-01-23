@@ -19,12 +19,12 @@ export class DialogDocumentView {
     document;
 
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.subscription = this.messageService.docViewAnnounced$.subscribe(
+        /*this.subscription = this.messageService.docViewAnnounced$.subscribe(
             docid => {
                 this.showDialog();
                 this.getDoc(docid);
             }
-        );
+        );*/
     }
     public showDialog(): void {
         this.Modal.show();

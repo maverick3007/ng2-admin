@@ -24,7 +24,7 @@ export class DialogCustomerSelect {
     selectedCustomer;
     searchString = new FormControl('');
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.subscription = this.messageService.custSelectAnnounced$.subscribe(
+        this.subscription = this.messageService.custSelectPopupAnnounced$.subscribe(
             value => {
                 this.searchString.reset();
                 this.selectedFilter = 'name';

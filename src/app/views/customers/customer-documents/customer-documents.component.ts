@@ -40,7 +40,7 @@ export class CustomerDocumentsComponent {
     }
 
     selectCustomer(){
-        this.messageService.announceDocView(this.selectedDocument['Id']);
+        //this.messageService.announceDocView(this.selectedDocument['Id']);
     }
 
 }

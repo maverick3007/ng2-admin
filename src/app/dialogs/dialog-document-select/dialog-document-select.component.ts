@@ -24,7 +24,7 @@ export class DialogDocumentSelect {
     documents: Array<Object> = [];
     selectedDocument;
     constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.subscription = this.messageService.docSelectAnnounced$.subscribe(
+        this.subscription = this.messageService.docSelectPopupAnnounced$.subscribe(
             value => {
                 this.selectedDocument = null;
                 this.documents = [];
@@ -62,7 +62,7 @@ export class DialogDocumentSelect {
 
     selectDocument() {
         this.Modal.hide();
-        // this.messageService.announceCustomer(this.selectedDocument);
+        this.messageService.announceDocument(this.selectedDocument);
     }
 
     public showDialog(): void {

@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
-
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../../../services';
 import { MessageService } from '../../../services';
 import { Subscription } from 'rxjs/Subscription' ;
@@ -19,8 +19,13 @@ export class CustomerDocumentCountersComponent implements OnChanges{
     ulDocs:Array<Object>;
     loading = false;
     @Input() customer: Object;
-    constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-
+    constructor(private messageService: MessageService, private _auth: AuthenticationService, private _router:Router) {
+        this.subscription = this.messageService.documentAnnounced$.subscribe(
+            value => {
+                let docId = value['Id'];
+                this.navToDoc(docId);
+            } 
+        )
     }
 
     ngOnChanges() {
@@ -32,6 +37,9 @@ export class CustomerDocumentCountersComponent implements OnChanges{
 
     }
 
+    navToDoc(id){
+        this._router.navigate(['/views/documents/documentdetails', id ]);
+    }
 
     getCustomerDocumentCounters(id){
         this.loading=true;
@@ -42,7 +50,7 @@ export class CustomerDocumentCountersComponent implements OnChanges{
     }
 
     gotoDocSelection(counter){
-        this.messageService.announceDocSelect('custid=' + this.customer['Id'] + '&doctypes=' + counter.Object.Id);
+        this.messageService.announceDocSelectPopup('custid=' + this.customer['Id'] + '&doctypes=' + counter.Object.Id);
     }
 
     populateCounters(res){

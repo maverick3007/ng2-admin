@@ -6,39 +6,41 @@ export class MessageService {
 
 // Observable string sources
     private errorAnnouncedSource = new Subject<string>();
-    private custSelectAnnouncedSource = new Subject<string>();
-    private docSelectAnnouncedSource = new Subject<string>();
-    private docViewAnnouncedSource = new Subject<string>();
+    private custSelectPopupSource = new Subject<string>();
+    private docSelectPopupSource = new Subject<string>();
+    
 
     // Observable object sources
 private customerAnnouncedSource = new Subject<Object>();
+private documentAnnouncedSource = new Subject<Object>();
 
 // Observable string streams
   errorAnnounced$ = this.errorAnnouncedSource.asObservable();
-  custSelectAnnounced$ = this.custSelectAnnouncedSource.asObservable();
-  docSelectAnnounced$ = this.docSelectAnnouncedSource.asObservable();
+  custSelectPopupAnnounced$ = this.custSelectPopupSource.asObservable();
+  docSelectPopupAnnounced$ = this.docSelectPopupSource.asObservable();
+  
   customerAnnounced$ = this.customerAnnouncedSource.asObservable();
-  docViewAnnounced$ = this.docViewAnnouncedSource.asObservable();
+  documentAnnounced$ = this.documentAnnouncedSource.asObservable();
 
       // Service message commands
   announceError(error: string) {
     this.errorAnnouncedSource.next(error);
   }
 
-  announceCustSelect(text: string) {
-    this.custSelectAnnouncedSource.next(text);
+  announceCustSelectPopup(text: string) {
+    this.custSelectPopupSource.next(text);
   }
 
-  announceDocSelect(text: string) {
-    this.docSelectAnnouncedSource.next(text);
+  announceDocSelectPopup(text: string) {
+    this.docSelectPopupSource.next(text);
   }
 
   announceCustomer(customer: Object){
     this.customerAnnouncedSource.next(customer);
   }
 
-  announceDocView(docid: string){
-    this.docViewAnnouncedSource.next(docid);
+  announceDocument(doc: Object){
+    this.documentAnnouncedSource.next(doc);
   }
 
 }

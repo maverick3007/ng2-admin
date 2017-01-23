@@ -47,6 +47,18 @@ export const PAGES_MENU = [
                         order: 200
                     }
                 }
+            },
+            {
+                path: 'documents',
+                data: {
+                    menu: {
+                        title: 'Documenten',
+                        icon: 'ion-document',
+                        selected: false,
+                        expanded: false,
+                        order: 300
+                    }
+                }
             },]
     }
 ];

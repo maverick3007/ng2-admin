@@ -23,7 +23,7 @@ export class CustomerSearchComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.messageService.announceCustSelect("go")
+    this.messageService.announceCustSelectPopup("go")
   }
 
 

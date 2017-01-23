@@ -131,7 +131,7 @@ linkCustomer(id){
   }
 
   linkCust(){
-    this._message.announceCustSelect("go")
+    this._message.announceCustSelectPopup("go")
   }
 }
 
