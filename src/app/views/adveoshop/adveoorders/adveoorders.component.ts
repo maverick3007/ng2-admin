@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class AdveoOrders implements OnInit {
   @ViewChild('smModal') confirmModal: ModalDirective;
+   @ViewChild('confDel') confDel: ModalDirective;
   @ViewChild('finalModal') finalModal: ModalDirective;
   hasSelectedOrder: boolean = false;
   nrOfOrders: number;
@@ -20,6 +21,7 @@ export class AdveoOrders implements OnInit {
   currentpage: number = 0;
   orders: Array<Object> = [];
   selectedOrder: Object;
+  orderToRemove: Object;
   isLoading: boolean = false;
   resultOrderId:string ="";
   subscription: Subscription;
@@ -79,6 +81,21 @@ linkCustomer(id){
   selectOrder(order) {
     this.selectedOrder = order;
     this.hasSelectedOrder = true;
+  }
+
+  confirmRemoveOrder(order){
+    this.orderToRemove = order;
+    this.confDel.show();
+  }
+
+  removeOrder(){
+    this.confDel.hide();
+     this._auth.apiGet('adveoorder/removeadveoorder?id=' + this.orderToRemove['Id']).subscribe(value =>{
+       this.currentpage = this.currentpage -1;
+        this.orders = [];
+    this.hasSelectedOrder = false;
+    this.loadData();
+     });
   }
 
   public showyChildModal(): void {

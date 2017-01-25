@@ -15,17 +15,18 @@
 						<th class="align-right">Datum</th>
 						<th class="align-right">Waarde</th>
 						<th class="align-right">Klant</th>
+						<th></th>
 
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let order of orders" class="no-top-border" (click)="selectOrder(order)">
+					<tr *ngFor="let order of orders" class="no-top-border">
 
-						<td class="align-right">{{order.Id}}</td>
-						<td class="align-right">{{order.DateNr}}</td>
-						<td class="align-right">{{order.TotalValue}}</td>
-						<td class="align-right">{{order.CustomerId}} {{order.Customer.Id}}<br/>{{order.Customer.Name}}</td>
-
+						<td class="align-right" (click)="selectOrder(order)">{{order.Id}}</td>
+						<td class="align-right" (click)="selectOrder(order)">{{order.DateNr}}</td>
+						<td class="align-right" (click)="selectOrder(order)">{{order.TotalValue}}</td>
+						<td class="align-right" (click)="selectOrder(order)">{{order.CustomerId}} {{order.Customer.Id}}<br/>{{order.Customer.Name}}</td>
+						<td><button (click)="confirmRemoveOrder(order)" type="button" class="btn btn-danger btn-icon"><i class="ion-close-circled"></i></button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -81,7 +82,7 @@
 						<td class="align-right">{{ line.WinnerArticle.Description }}</td>
 						<td class="align-right">{{ line.Qty }}</td>
 						<td class="align-right">{{ line.UnitPrice }}</td>
-						<td><button (click)="removeLine(line)" type="button" class="btn btn-danger btn-icon"><i class="ion-nuclear"></i></button></td>
+						<td><button (click)="removeLine(line)" type="button" class="btn btn-danger btn-icon"><i class="ion-close-circled"></i></button></td>
 					</tr>
 				</tbody>
 			</table>
@@ -100,10 +101,29 @@
 				<h4 class="modal-title">Registratie Webbestelling</h4>
 			</div>
 			<div class="modal-body">
-				Bent u zeker dat deze webbestelling mag worden geregistreerd
+				Bent je zeker dat deze webbestelling mag worden geregistreerd?
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-primary confirm-btn" (click)="createOrder()">Registreren</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div bsModal #confDel="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" aria-label="Close" (click)="confDel.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+				<h4 class="modal-title">Verwijderen Webbestelling</h4>
+			</div>
+			<div class="modal-body">
+				Bent je zeker dat deze webbestelling mag worden verwijderd?
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-danger confirm-btn" (click)="removeOrder()">Verwijderen</button>
 			</div>
 		</div>
 	</div>
