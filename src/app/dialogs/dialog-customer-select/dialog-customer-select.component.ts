@@ -1,10 +1,8 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap';
 import { FormControl } from '@angular/forms';
-
-import { MessageService } from '../../services/message.service';
 import { AuthenticationService } from '../../services';
-import { Subscription } from 'rxjs/Subscription';
+import {GlobalState} from '../../global.state';
 
 @Component({
     selector: 'dialog-customer-select',
@@ -15,28 +13,24 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class DialogCustomerSelect {
     @ViewChild('custselectModal') Modal: ModalDirective;
-    subscription: Subscription;
-    errNotifier: Subscription;
     title: String = 'titel';
     filters: Array<filter> = [{ id: 'name', name: 'naam' }, { id: 'street', name: 'adres' }]
     selectedFilter = 'name';
     customers = [];
     selectedCustomer;
     searchString = new FormControl('');
-    constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.subscription = this.messageService.custSelectPopupAnnounced$.subscribe(
-            value => {
+    constructor(private _auth: AuthenticationService, private _state:GlobalState) {
+        this._state.subscribe('popup.customerselect', (value) =>{
                 this.searchString.reset();
                 this.selectedFilter = 'name';
                 this.selectedCustomer = null;
                 this.customers = [];
                 this.showDialog();
-            });
-        this.errNotifier = this.messageService.errorAnnounced$.subscribe(
-            value => {
+        });   
 
-                this.Modal.hide();
-            });
+        this._state.subscribe('popup.error', (error) =>{
+            this.Modal.hide();
+        });
         this.searchString.valueChanges
             .debounceTime(700)
             .subscribe(searchString => this._auth.apiGet('customer?' + this.selectedFilter + '=' + searchString)
@@ -55,7 +49,7 @@ export class DialogCustomerSelect {
 
     selectCustomer() {
         this.Modal.hide();
-        this.messageService.announceCustomer(this.selectedCustomer);
+        this._state.notifyDataChanged('customer.details', this.selectedCustomer);
     }
 
     public showDialog(): void {

@@ -1,8 +1,6 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap';
-
-import { MessageService } from '../../services/message.service';
-import { Subscription } from 'rxjs/Subscription';
+import {GlobalState} from '../../global.state';
 
 
 @Component({
@@ -14,15 +12,15 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class DialogError  {
   @ViewChild('errModal') errModal: ModalDirective;
-  subscription: Subscription;
   title: String = 'titel';
   message: String = 'bericht';
-  constructor(private messageService: MessageService) {
-    this.subscription = this.messageService.errorAnnounced$.subscribe(
-      value => {
-        this.message = value;
+  constructor( private _state:GlobalState) {
+
+      this._state.subscribe('popup.error', (error) =>{
+        this.title = error.title;
+        this.message = error.message;
         this.showDialog();
-      });
+      })
   }
 
 

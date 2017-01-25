@@ -1,9 +1,6 @@
 import {Component, ViewEncapsulation, OnInit} from '@angular/core';
 import {Router } from '@angular/router';
-import { MessageService } from '../../services/message.service';
-import { Subscription } from 'rxjs/Subscription';
-
-//import {CustomerIdentityComponent} from '../customers/customer-identity/customer-identity'
+import {GlobalState} from '../../global.state';
 
 @Component({
   selector: 'customers',
@@ -12,12 +9,9 @@ import { Subscription } from 'rxjs/Subscription';
   template: require('./customers.html')
 })
 export class CustomersComponent implements OnInit {
-  test= 'yoho';
   customer;
-  subscription: Subscription;
-  constructor(private messageService: MessageService, private _router:Router) {
-    this.subscription = this.messageService.customerAnnounced$.subscribe(
-      value => {
+  constructor(private _router:Router, private _state:GlobalState) {
+      this._state.subscribe('customer.details', (value) => {
         this.customer = value;
         let id = value['Id']
         this._router.navigate(['/views/customers/customerdetails', id ]);
@@ -29,7 +23,7 @@ export class CustomersComponent implements OnInit {
   }
 
   search(){
-    this.messageService.announceCustSelectPopup("go")
+    this._state.notifyDataChanged('popup.customerselect', '');
   }
 
 

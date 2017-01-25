@@ -1,10 +1,9 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap';
 import { FormControl } from '@angular/forms';
-
-import { MessageService } from '../../services/message.service';
+import {GlobalState} from '../../global.state';
 import { AuthenticationService } from '../../services';
-import { Subscription } from 'rxjs/Subscription';
+
 
 @Component({
     selector: 'dialog-document-opt-select',
@@ -15,25 +14,20 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class DialogDocumentOptSelect {
     @ViewChild('docselectOptModal') Modal: ModalDirective;
-    subscription: Subscription;
-    errNotifier: Subscription;
+
     hasMoreEntries = false;
     loading = false;
     pageNr;
     searchString;
     documents: Array<Object> = [];
     selectedDocument;
-    constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.subscription = this.messageService.docOptSelectPopupAnnounced$.subscribe(
-            value => {
+    constructor(private _auth: AuthenticationService, private _state:GlobalState) {
+        this._state.subscribe('popup.documentoptselect', (opts) => {
                 this.Modal.show();
-
             });
-        this.errNotifier = this.messageService.errorAnnounced$.subscribe(
-            value => {
-
-                this.Modal.hide();
-            });
+                this._state.subscribe('popup.error', (error) =>{
+            this.Modal.hide();
+        });
     }
 
     searchDocs(){
@@ -61,7 +55,7 @@ export class DialogDocumentOptSelect {
 
     selectDocument() {
         this.Modal.hide();
-        this.messageService.announceDocument(this.selectedDocument);
+        this._state.notifyDataChanged('document.details', this.selectedDocument);
     }
 
     public showDialog(): void {

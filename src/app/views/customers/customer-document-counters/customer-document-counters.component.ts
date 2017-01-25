@@ -2,8 +2,8 @@ import { Component, ViewEncapsulation, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../../services';
-import { MessageService } from '../../../services';
-import { Subscription } from 'rxjs/Subscription' ;
+
+import {GlobalState} from '../../../global.state';
 
 @Component({
     selector: 'customer-document-counters',
@@ -13,19 +13,16 @@ import { Subscription } from 'rxjs/Subscription' ;
 })
 
 export class CustomerDocumentCountersComponent implements OnChanges{
-    subscription: Subscription;
     specialDocs:Array<Object>;
     ubDocs:Array<Object>;
     ulDocs:Array<Object>;
     loading = false;
     @Input() customer: Object;
-    constructor(private messageService: MessageService, private _auth: AuthenticationService, private _router:Router) {
-        this.subscription = this.messageService.documentAnnounced$.subscribe(
-            value => {
+    constructor(private _auth: AuthenticationService, private _router:Router, private _state:GlobalState) {
+        this._state.subscribe('document.details', (value) => {
                 let docId = value['Id'];
                 this.navToDoc(docId);
-            } 
-        )
+            })
     }
 
     ngOnChanges() {
@@ -50,7 +47,8 @@ export class CustomerDocumentCountersComponent implements OnChanges{
     }
 
     gotoDocSelection(counter){
-        this.messageService.announceDocSelectPopup('custid=' + this.customer['Id'] + '&doctypes=' + counter.Object.Id);
+        this._state.notifyDataChanged('popup.documentselect','custid=' + this.customer['Id'] + '&doctypes=' + counter.Object.Id);
+        //this.messageService.announceDocSelectPopup('custid=' + this.customer['Id'] + '&doctypes=' + counter.Object.Id);
     }
 
     populateCounters(res){

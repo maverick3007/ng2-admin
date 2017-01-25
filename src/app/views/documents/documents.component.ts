@@ -1,7 +1,6 @@
 import {Component, ViewEncapsulation, OnInit} from '@angular/core';
 import {Router } from '@angular/router';
-import { MessageService } from '../../services/message.service';
-import { Subscription } from 'rxjs/Subscription';
+import {GlobalState} from '../../global.state';
 
 @Component({
   selector: 'documents',
@@ -10,16 +9,13 @@ import { Subscription } from 'rxjs/Subscription';
   template: require('./documents.html')
 })
 export class DocumentsComponent implements OnInit {
-  test= 'yoho';
   document;
-  subscription: Subscription;
-  constructor(private messageService: MessageService, private _router:Router) {
-    this.subscription = this.messageService.documentAnnounced$.subscribe(
-      value => {
+  constructor( private _router:Router, private _state:GlobalState) {
+      this._state.subscribe('document.details', (value) => {
         this.document = value;
         let id = value['Id']
         this._router.navigate(['/views/documents/documentdetails', id ]);
-      });
+    });
   }
 
   ngOnInit(){
@@ -27,7 +23,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   search(){
-    this.messageService.announceDocOptSelectPopup("");
+    this._state.notifyDataChanged('popup.documentoptselect', '');
   }
 
 

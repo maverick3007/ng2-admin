@@ -5,6 +5,7 @@ import { Http, Response, Headers } from '@angular/http';
 
 import { ConstantsService } from './constants.service';
 import { MessageService } from './message.service';
+import {GlobalState} from '../global.state';
 
 import {DialogError } from '../dialogs/dialog-error/dialog-error.component';
 
@@ -17,7 +18,7 @@ export class AuthenticationService {
     // store the URL so we can redirect after logging in
     redirectUrl: string;
 
-    constructor(private _http: Http, private _const: ConstantsService, private _router: Router, private _messageService:MessageService) {
+    constructor(private _http: Http, private _const: ConstantsService, private _router: Router, private _messageService:MessageService, private _state:GlobalState) {
         this.loggedIn = !!localStorage.getItem('auth_token');
         if(this.loggedIn)
         {
@@ -104,7 +105,8 @@ export class AuthenticationService {
         let errMsg = (error.message) ? error.message :
             error.status ? `${error.status} - ${error.statusText}` : 'Server error';
         console.error(errMsg); // log to console instead
-        self._messageService.announceError(errMsg);
+        //self._messageService.announceError(errMsg);
+        self._state.notifyDataChanged('popup.error', {title:'Fout', message:errMsg})
         return Observable.throw(errMsg);
     }
 
@@ -117,8 +119,7 @@ export class AuthenticationService {
     }
 
     private extractData(res: Response) {
-        let body = res.json();
-        
+        let body = res.json();    
         return body;
     }
 

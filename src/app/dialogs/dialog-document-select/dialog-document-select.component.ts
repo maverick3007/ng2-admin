@@ -1,10 +1,8 @@
 import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap';
 import { FormControl } from '@angular/forms';
-
-import { MessageService } from '../../services/message.service';
 import { AuthenticationService } from '../../services';
-import { Subscription } from 'rxjs/Subscription';
+import {GlobalState} from '../../global.state';
 
 @Component({
     selector: 'dialog-document-select',
@@ -15,17 +13,14 @@ import { Subscription } from 'rxjs/Subscription';
 
 export class DialogDocumentSelect {
     @ViewChild('docselectModal') Modal: ModalDirective;
-    subscription: Subscription;
-    errNotifier: Subscription;
     hasMoreEntries = false;
     loading = false;
     pageNr;
     searchString;
     documents: Array<Object> = [];
     selectedDocument;
-    constructor(private messageService: MessageService, private _auth: AuthenticationService) {
-        this.subscription = this.messageService.docSelectPopupAnnounced$.subscribe(
-            value => {
+    constructor(private _auth: AuthenticationService, private _state:GlobalState) {
+        this._state.subscribe('popup.documentselect', (value) =>{
                 this.selectedDocument = null;
                 this.documents = [];
                 this.showDialog();
@@ -33,12 +28,10 @@ export class DialogDocumentSelect {
                 this.loading = true;
                 this._auth.apiGet(this.searchString)
                     .subscribe(docs => this.extractDocuments(docs))
-            });
-        this.errNotifier = this.messageService.errorAnnounced$.subscribe(
-            value => {
-
-                this.Modal.hide();
-            });
+        }) ;   
+        this._state.subscribe('popup.error', (error) =>{
+            this.Modal.hide();
+        });
     }
 
     extractDocuments(docs) {
@@ -62,7 +55,7 @@ export class DialogDocumentSelect {
 
     selectDocument() {
         this.Modal.hide();
-        this.messageService.announceDocument(this.selectedDocument);
+        this._state.notifyDataChanged('document.details', this.selectedDocument);
     }
 
     public showDialog(): void {
