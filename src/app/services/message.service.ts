@@ -8,7 +8,7 @@ export class MessageService {
     private errorAnnouncedSource = new Subject<string>();
     private custSelectPopupSource = new Subject<string>();
     private docSelectPopupSource = new Subject<string>();
-    
+    private docOptSelectPopupSource = new Subject<string>();
 
     // Observable object sources
 private customerAnnouncedSource = new Subject<Object>();
@@ -18,6 +18,7 @@ private documentAnnouncedSource = new Subject<Object>();
   errorAnnounced$ = this.errorAnnouncedSource.asObservable();
   custSelectPopupAnnounced$ = this.custSelectPopupSource.asObservable();
   docSelectPopupAnnounced$ = this.docSelectPopupSource.asObservable();
+  docOptSelectPopupAnnounced$ = this.docOptSelectPopupSource.asObservable();
   
   customerAnnounced$ = this.customerAnnouncedSource.asObservable();
   documentAnnounced$ = this.documentAnnouncedSource.asObservable();
@@ -33,6 +34,10 @@ private documentAnnouncedSource = new Subject<Object>();
 
   announceDocSelectPopup(text: string) {
     this.docSelectPopupSource.next(text);
+  }
+
+  announceDocOptSelectPopup(text:string){
+    this.docOptSelectPopupSource.next(text);
   }
 
   announceCustomer(customer: Object){

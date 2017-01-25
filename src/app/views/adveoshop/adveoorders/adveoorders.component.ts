@@ -48,6 +48,8 @@ linkCustomer(id){
 
 
 
+
+
   loadData() {
     this.isLoading = true;
     this.currentpage = this.currentpage + 1;
@@ -118,6 +120,13 @@ linkCustomer(id){
       };
     }
     return false;
+  }
+
+  removeLine(line){
+
+        var i = this.selectedOrder['WebOrderLines'].indexOf(line);
+        this.selectedOrder['WebOrderLines'].splice(i,1);
+
   }
 
   endPost(data) {

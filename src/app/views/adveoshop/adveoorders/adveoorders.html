@@ -71,6 +71,7 @@
 						<th class="align-right">Beschrijving</th>
 						<th class="align-right">Aantal</th>
 						<th class="align-right">Stukprijs</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -80,6 +81,7 @@
 						<td class="align-right">{{ line.WinnerArticle.Description }}</td>
 						<td class="align-right">{{ line.Qty }}</td>
 						<td class="align-right">{{ line.UnitPrice }}</td>
+						<td><button (click)="removeLine(line)" type="button" class="btn btn-danger btn-icon"><i class="ion-nuclear"></i></button></td>
 					</tr>
 				</tbody>
 			</table>

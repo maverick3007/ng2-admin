@@ -27,7 +27,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   search(){
-    this.messageService.announceDocSelectPopup("");
+    this.messageService.announceDocOptSelectPopup("");
   }
 
 
