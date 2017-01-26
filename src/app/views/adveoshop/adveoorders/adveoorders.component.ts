@@ -3,6 +3,7 @@ import { ModalDirective } from 'ng2-bootstrap';
 import {CustomerSearchComponent} from '../../customers/customer-search/customer-search'
 import { AuthenticationService, MessageService } from '../../../services';
 import { Subscription } from 'rxjs/Subscription';
+import {GlobalState} from '../../../global.state';
 
 @Component({
   selector: 'adveoorders',
@@ -27,9 +28,8 @@ export class AdveoOrders implements OnInit {
   subscription: Subscription;
 
 
-  constructor(private _auth: AuthenticationService, private _message : MessageService) {
-    this.subscription = this._message.customerAnnounced$.subscribe(
-    value =>{
+  constructor(private _auth: AuthenticationService, private _message : MessageService,  private _state:GlobalState) {
+     this._state.subscribe('customer.details', (value) => {
       this.linkCustomer(value['Id']);
     })
 }
@@ -153,11 +153,11 @@ linkCustomer(id){
     this.orders =[];
     this.loadData();
     this.finalModal.show();
-    
+  
   }
 
   linkCust(){
-    this._message.announceCustSelectPopup("go")
+    this._state.notifyDataChanged('popup.customerselect', '');
   }
 }
 

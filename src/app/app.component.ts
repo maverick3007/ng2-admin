@@ -5,6 +5,7 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './theme/
 import { layoutPaths } from './theme/theme.constants';
 import { BaThemeConfig } from './theme/theme.config';
 import {ComponentsHelper } from 'ng2-bootstrap';
+import {InitService} from './services';
 
 /*
  * App Component
@@ -29,7 +30,10 @@ export class App {
               private _imageLoader: BaImageLoaderService,
               private _spinner: BaThemeSpinner,
               private _config: BaThemeConfig,
-              private viewContainerRef: ViewContainerRef) {
+              private viewContainerRef: ViewContainerRef,
+              private _init: InitService) {
+                
+    this._init.initialize();
 
     this._fixModals();
 

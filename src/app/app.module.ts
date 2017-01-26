@@ -20,13 +20,15 @@ import { NgaModule } from './theme/nga.module';
 import { ViewsModule } from './views/views.module';
 import {DialogModule} from './dialogs/dialog.module';
 
+import {InitService} from './services';
 
 
 
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
-  GlobalState
+  GlobalState,
+  InitService
 ];
 
 type StoreType = {

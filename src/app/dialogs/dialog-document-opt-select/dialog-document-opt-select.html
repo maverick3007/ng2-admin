@@ -11,16 +11,14 @@
 			<div class="modal-body" style="background: black">
 
                 <div class="form-group row" >
-					<div class="col-xs-2">
-						<select class="form-control" id="searchType">
-      						<option  value="0">UF</option>
-							<option  value="0">UL</option>
+					<div class="col-xs-3">
+						<select [ngModel]="selectedDocType" class="form-control" (ngModelChange)="updateSelectedValue($event,'T')" id="searchType">
+      						<option *ngFor="let type of docTypes" [value]="type.Id">{{type.Id}}-{{type.Name}}</option>
     					</select>
 					</div>
-					<div class="col-xs-3">
-						<select class="form-control" id="searchType">
-      						<option  value="0">2017</option>
-							<option  value="0">2016</option>
+					<div class="col-xs-2">
+						<select [ngModel]="selectedYear" class="form-control" (ngModelChange)="updateSelectedValue($event, 'Y')" id="searchYear">
+      						<option *ngFor="let year of activeYears" [value]="year">{{year}}</option>
     					</select>
 					</div>
 					<div class="col-xs-7">
@@ -33,6 +31,7 @@
 							<tr *ngFor="let doc of documents" [class.info]="(selectedDocument === doc)" class="no-top-border" (click)="pickDocument(doc)">
 								<td></td>
 								<td class="align-left">{{doc.Id}}</td>
+								<td class="align-left">{{doc.Customer.Name}}</td>
 								<td class="align-right">{{doc.Date01}}</td>
 								<td class="align-right">{{doc.Date02}}</td>
 								<td class="align-right">{{doc.Amount}}</td>

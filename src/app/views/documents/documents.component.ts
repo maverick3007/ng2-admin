@@ -22,8 +22,12 @@ export class DocumentsComponent implements OnInit {
     
   }
 
-  search(){
-    this._state.notifyDataChanged('popup.documentoptselect', '');
+  searchIn(){
+    this._state.notify('popup.documentoptselect', 'in');
+  }
+
+  searchOut(){
+    this._state.notify('popup.documentoptselect', 'out');
   }
 
 

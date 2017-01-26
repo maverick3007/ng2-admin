@@ -13,6 +13,14 @@ export class GlobalState {
     this._dataStream$.subscribe((data) => this._onEvent(data));
   }
 
+  notify(event,value){
+    this._data[event] = value;
+
+      this._data.next({
+        event: event,
+        data: this._data[event]});
+  }
+
   notifyDataChanged(event, value) {
 
     let current = this._data[event];

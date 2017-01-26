@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { AuthenticationService } from '../../../../services';
-import { Subscription } from 'rxjs/Subscription' ;
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'document-totals',
@@ -19,18 +19,20 @@ export class DocumentTotalsComponent implements OnChanges {
     Vat = 0;
     constructor(private _auth: AuthenticationService) {
         //this.subscription = this.messageService.customerAnnounced$.subscribe(
-         //   value => {
-         //       this.getCustomer(value['Id']);
-           // });
+        //   value => {
+        //       this.getCustomer(value['Id']);
+        // });
     }
 
     ngOnChanges() {
-        if (!!this.document){
+        if (!!this.document) {
+            this.incVat = 0;
+            this.excVat = 0;
+            this.Vat = 0;
             let docLines = this.document['Doclines'];
-            for (var i = 0; i < docLines.length; i++)
-            {
+            for (var i = 0; i < docLines.length; i++) {
                 this.excVat = this.excVat + (docLines[i].Qty * docLines[i].UnitPrice);
-                if(!!docLines[i].Vat){
+                if (!!docLines[i].Vat) {
                     this.Vat = this.Vat + (docLines[i].Qty * docLines[i].UnitPrice * docLines[i].Vat.Percentage * 0.01)
                 }
             }

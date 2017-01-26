@@ -5,11 +5,29 @@ import { AuthenticationService } from './authentication.service';
 @Injectable()
 export class InitService {
 
-
-  DocumentTypes: Array<Object> = [];
-
+  init: Object;
+  documentTypesIn: Array<Object> = [];
+  documentTypesOut: Array<Object> = [];
+  activeYears:Array<Number> = [];
   constructor(private _auth: AuthenticationService) { 
-      this._auth.apiGet('init')
+      
+  }
+
+  initialize(){
+    this.getActiveYears();
+    this._auth.apiGet('init').subscribe(value => {
+      this.init = value;
+      this.documentTypesIn = this.init['InDocTypes'];
+      this.documentTypesOut = this.init['OutDocTypes']
+    });
+  }
+
+  getActiveYears(){
+    var d = new Date();
+    var n = d.getFullYear();
+    for(var i = 0; i<10; i++){
+      this.activeYears.push(n-i);
+    }
   }
 
 }
