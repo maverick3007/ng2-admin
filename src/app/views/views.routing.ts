@@ -19,6 +19,7 @@ const routes: Routes = [
             { path: 'adveoshop', loadChildren: () => System.import('./adveoshop/adveoshop.module') },
             { path: 'customers', loadChildren: () => System.import('./customers/customers.module') },
             { path: 'documents', loadChildren: () => System.import('./documents/documents.module') },
+            { path: 'articles', loadChildren: () => System.import('./articles/articles.module') },
         ]
     }
 ];

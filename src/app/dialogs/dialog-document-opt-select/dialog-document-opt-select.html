@@ -12,17 +12,17 @@
 
                 <div class="form-group row" >
 					<div class="col-xs-3">
-						<select [ngModel]="selectedDocType" class="form-control" (ngModelChange)="updateSelectedValue($event,'T')" id="searchType">
+						<select [(ngModel)]="selectedDocType" class="form-control" (ngModelChange)="updateSelectedValue($event,'T')" id="searchType">
       						<option *ngFor="let type of docTypes" [value]="type.Id">{{type.Id}}-{{type.Name}}</option>
     					</select>
 					</div>
 					<div class="col-xs-2">
-						<select [ngModel]="selectedYear" class="form-control" (ngModelChange)="updateSelectedValue($event, 'Y')" id="searchYear">
+						<select [(ngModel)]="selectedYear" class="form-control" (ngModelChange)="updateSelectedValue($event, 'Y')" id="searchYear">
       						<option *ngFor="let year of activeYears" [value]="year">{{year}}</option>
     					</select>
 					</div>
 					<div class="col-xs-7">
-						<input class="form-control  form-control-lg" type="text" id="example-search-input">
+						<input [formControl]="lookup"  class="form-control form-control-lg" type="text" id="example-search-input">
 					</div>
 				</div>
 				<ba-card class="row" baCardClass="docselect-card  with-scroll">

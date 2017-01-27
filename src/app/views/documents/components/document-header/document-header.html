@@ -38,7 +38,7 @@
 			<table class="table table-bordered table-condensed">
 				<tr>
 					<td>Id</td>
-					<td>{{document.Customer.Id}}</td>
+					<td><button (click)="gotoCust(document.Customer.Id)" type="button" class="btn btn-info btn-icon"><i class="ion-person"></i> {{document.Customer.Id}}</button></td>
 				</tr>
 				<tr>
 					<td>Type</td>

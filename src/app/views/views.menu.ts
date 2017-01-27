@@ -59,6 +59,18 @@ export const PAGES_MENU = [
                         order: 300
                     }
                 }
+            },
+            {
+                path: 'articles',
+                data: {
+                    menu: {
+                        title: 'Artikels',
+                        icon: 'ion-cube',
+                        selected: false,
+                        expanded: false,
+                        order: 400
+                    }
+                }
             },]
     }
 ];

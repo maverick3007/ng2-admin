@@ -24,11 +24,14 @@ export class DialogDocumentOptSelect {
     selectedDocType:Object;
     activeYears:Array<Number> = [];
     selectedYear:Number;
-
+    lookup = new FormControl('');
+    lookupString: string = '';
     documents: Array<Object> = [];
     selectedDocument;
     constructor(private _auth: AuthenticationService, private _state: GlobalState, private _init: InitService) {
         this._state.subscribe('popup.documentoptselect', (opts) => {
+
+            this.lookup.reset();
             this.selectedDocument = null;
             if(opts=='in'){
                 this.docTypes = _init.documentTypesIn
@@ -43,6 +46,14 @@ export class DialogDocumentOptSelect {
         this._state.subscribe('popup.error', (error) => {
             this.Modal.hide();
         });
+        this.lookup.valueChanges
+            .debounceTime(700)
+            .subscribe(lookup => {
+                if(!!lookup)
+                this.lookupString = lookup;
+                this.updateSelectedValue(lookup, 'L');  
+                          
+        })
     }
 
     searchDocs() {
@@ -59,18 +70,24 @@ export class DialogDocumentOptSelect {
     }
 
     updateSelectedValue(event, O){
+        this.documents = [];
         this.pageNr = 0;
         var doct ;
         var yr;
+        var lk;
+        if(O == 'L')
+        {
+            lk = event;
+        }else{lk = this.lookupString ;}
         if(O == 'T')
         {
             doct = event;
-        }else{doct = this.selectedDocType['Id'] ;}
+        }else{doct = this.selectedDocType ;}
         if(O == 'Y')
         {
             yr = event;
         }else{yr = this.selectedYear;}
-        this.searchString = 'document?doctypes=' + doct + '&year=' + yr;
+        this.searchString = 'document?doctypes=' + doct + '&year=' + yr + '&searchstr=' + lk;
         if(!!doct){
             this.loadMore();
         }
@@ -79,8 +96,11 @@ export class DialogDocumentOptSelect {
 
     loadMore() {
         this.pageNr++;
+        this.loading = true;
         this._auth.apiGet(this.searchString + '&pger=' + this.pageNr)
-            .subscribe(docs => this.extractDocuments(docs))
+            .subscribe(docs => {
+                this.loading = false;
+                this.extractDocuments(docs);})
     }
 
     pickDocument(doc) {
