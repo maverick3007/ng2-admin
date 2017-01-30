@@ -2,7 +2,9 @@ import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ng2-bootstrap';
 import { FormControl } from '@angular/forms';
 import { AuthenticationService } from '../../services';
-import {GlobalState} from '../../global.state';
+import { GlobalState } from '../../global.state';
+import { InitService } from '../../services';
+
 
 @Component({
     selector: 'dialog-articlecat-select',
@@ -12,15 +14,15 @@ import {GlobalState} from '../../global.state';
 })
 
 export class DialogArticlecatSelect {
-    @ViewChild('custselectModal') Modal: ModalDirective;
+    @ViewChild('catselectModal') Modal: ModalDirective;
     title: String = 'titel';
 
     categories = [];
     selectedCategory;
-    constructor(private _auth: AuthenticationService, private _state:GlobalState) {
+    constructor(private _auth: AuthenticationService, private _state:GlobalState, private _init: InitService) {
         this._state.subscribe('popup.articlecatselect', (value) =>{            
                 this.selectedCategory = null;
-                this.categories = [];
+                this.categories = _init.categoryTree;
                 this.showDialog();
         });   
 

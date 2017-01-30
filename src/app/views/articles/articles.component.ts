@@ -22,11 +22,11 @@ export class ArticlesComponent implements OnInit {
     
   }
 
-  /*searchIn(){
-    this._state.notify('popup.documentoptselect', 'in');
+  search(){
+    this._state.notify('popup.articlecatselect', '');
   }
 
-  searchOut(){
+  /*searchOut(){
     this._state.notify('popup.documentoptselect', 'out');
   }*/
 

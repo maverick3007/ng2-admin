@@ -9,6 +9,7 @@ import {Component, ViewEncapsulation} from '@angular/core';
     <dialog-customer-select></dialog-customer-select>
     <dialog-document-select></dialog-document-select>
     <dialog-document-opt-select></dialog-document-opt-select>
+    <dialog-articlecat-select></dialog-articlecat-select>
     <ba-sidebar></ba-sidebar>
     <ba-page-top ></ba-page-top>
     <div class="al-main">

@@ -8,6 +8,7 @@ export class InitService {
   init: Object;
   documentTypesIn: Array<Object> = [];
   documentTypesOut: Array<Object> = [];
+  categoryTree: Array<Object> = [];
   activeYears:Array<Number> = [];
   constructor(private _auth: AuthenticationService) { 
       
@@ -18,7 +19,8 @@ export class InitService {
     this._auth.apiGet('init').subscribe(value => {
       this.init = value;
       this.documentTypesIn = this.init['InDocTypes'];
-      this.documentTypesOut = this.init['OutDocTypes']
+      this.documentTypesOut = this.init['OutDocTypes'];
+      this.categoryTree = this.init['CategoryTree']
     });
   }
 

@@ -6,13 +6,14 @@ import {DialogError} from './dialog-error/dialog-error.component';
 import{ DialogCustomerSelect } from './dialog-customer-select/dialog-customer-select.component';
 import{ DialogDocumentSelect } from './dialog-document-select/dialog-document-select.component';
 import{ DialogDocumentOptSelect } from './dialog-document-opt-select/dialog-document-opt-select.component';
+import{ DialogArticlecatSelect } from './dialog-articlecat-select/dialog-articlecat-select.component';
 import{ DialogDocumentView } from './dialog-document-view/dialog-document-view.component';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const DIA_COMPONENTS = [
-DialogError, DialogCustomerSelect, DialogDocumentView, DialogDocumentSelect, DialogDocumentOptSelect]
+DialogError, DialogCustomerSelect, DialogDocumentView, DialogDocumentSelect, DialogDocumentOptSelect, DialogArticlecatSelect]
 
 @NgModule({
   declarations: [
