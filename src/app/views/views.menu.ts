@@ -70,7 +70,17 @@ export const PAGES_MENU = [
                         expanded: false,
                         order: 400
                     }
-                }
+                },
+                children: [
+                    {
+                        path: 'articlecatalog',
+                        data: {
+                            menu: {
+                                title: 'Catalogus',
+                            }
+                        }
+                    }
+                ]
             },]
     }
 ];

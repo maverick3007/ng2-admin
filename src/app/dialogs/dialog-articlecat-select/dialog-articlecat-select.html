@@ -15,7 +15,7 @@
 						<table class="table table-hover">
 							<tbody>
 								<tr *ngFor="let cat of categories" [class.info]="(selectedCategory === cat)" class="no-top-border" (click)="pickCategory(cat)">
-									<td></td>
+									<td style="width:20px">{{cat.Id}}</td>
 									<td class="align-left">{{cat.Name}}</td>
 								</tr>
 							</tbody>

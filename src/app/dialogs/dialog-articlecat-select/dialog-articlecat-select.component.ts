@@ -36,6 +36,9 @@ export class DialogArticlecatSelect {
 
 
     pickCategory(cat) {
+        if(!!cat.SubCategories){
+            this.categories = cat.SubCategories
+        }       
         this.selectedCategory = cat
     }
 

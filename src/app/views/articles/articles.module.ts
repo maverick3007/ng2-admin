@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 
 import { ArticlesComponent } from './articles.component';
+import { ArticleCatalogComponent} from './article-catalog/article-catalog.component'
 
 import { routing }       from './articles.routing';
 
@@ -18,7 +19,7 @@ import { routing }       from './articles.routing';
     routing
   ],
   declarations: [
-    ArticlesComponent,
+    ArticlesComponent, ArticleCatalogComponent
   ],
   providers: [
 

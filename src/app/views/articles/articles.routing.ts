@@ -1,6 +1,7 @@
 import { Routes, RouterModule }  from '@angular/router';
 
 import { ArticlesComponent } from './articles.component';
+import { ArticleCatalogComponent} from './article-catalog/article-catalog.component'
 
 //import { ArticleDetailsComponent} from './article-details/article-details.component'
 
@@ -10,7 +11,7 @@ const routes: Routes = [
     path: '',
     component: ArticlesComponent,
     children: [
-      //{ path: 'articledetails/:id', component: ArticleDetailsComponent}
+      { path: 'articlecatalog', component: ArticleCatalogComponent}
     ]
   }
 ];
