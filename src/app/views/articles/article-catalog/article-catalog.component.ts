@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { GlobalState } from '../../../global.state';
 import { AuthenticationService } from '../../../services';
 
 
@@ -11,14 +11,9 @@ import { AuthenticationService } from '../../../services';
 })
 
 export class ArticleCatalogComponent {
-    searchString: string = "";
-    lookup = new FormControl('');
-    searchFor: string = "Name";
-    constructor(private _auth: AuthenticationService) {
-        //this.subscription = this.messageService.customerAnnounced$.subscribe(
-         //   value => {
-         //       this.getCustomer(value['Id']);
-           // });
+
+    constructor() {
+
     }
 
 

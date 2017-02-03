@@ -114,7 +114,7 @@ linkCustomer(id){
     doc.doclines = new Array<DocLine>();
     for (var i = 0; i < this.selectedOrder['WebOrderLines'].length; i++) {
       let docl = new DocLine();
-      docl.seq = i;
+      docl.seq = i+1;
       docl.artId = this.selectedOrder['WebOrderLines'][i].WinnerArticle.Id;
       docl.artDescription = this.selectedOrder['WebOrderLines'][i].WebId;
       docl.qty = this.selectedOrder['WebOrderLines'][i].Qty;
